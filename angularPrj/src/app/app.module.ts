@@ -26,6 +26,7 @@ import { AboutComponent } from './view/about/about.component';
 import { NewsComponent } from './view/news/news.component';
 import { Page404Component } from './view/page404/page404.component';
 import { IndexComponent } from './view/index/index.component';
+import { HttpServiceComponent } from './view/http-service/http-service.component';
 
 @NgModule({
   imports: [
@@ -62,6 +63,7 @@ import { IndexComponent } from './view/index/index.component';
     NewsComponent,
     Page404Component,
     IndexComponent,
+    HttpServiceComponent,
   ],
   providers: [
     AuthService,

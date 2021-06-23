@@ -17,6 +17,7 @@ import { MessageService } from './message.service';
 import { MessagesComponent } from './messages/messages.component';
 import { PackageSearchComponent } from './package-search/package-search.component';
 import { UploaderComponent } from './uploader/uploader.component';
+import { HttpServiceComponent } from './view/http-service/http-service.component'
 
 const routes: Routes = [
   {
@@ -54,6 +55,10 @@ const routes: Routes = [
   {
     path:"package-search",
     component:PackageSearchComponent
+  },
+  {
+    path:"httpService",
+    component:HttpServiceComponent
   },
   {
     path:"**",
