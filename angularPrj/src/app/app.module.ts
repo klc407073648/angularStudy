@@ -27,6 +27,7 @@ import { NewsComponent } from './view/news/news.component';
 import { Page404Component } from './view/page404/page404.component';
 import { IndexComponent } from './view/index/index.component';
 import { HttpServiceComponent } from './view/http-service/http-service.component';
+//import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import { HttpServiceComponent } from './view/http-service/http-service.component
         put204: false // return entity after PUT/update
       }
     ),
+    //AdminModule,
      AppRoutingModule
   ],
   declarations: [
