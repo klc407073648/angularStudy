@@ -27,8 +27,14 @@ import { NewsComponent } from './view/news/news.component';
 import { Page404Component } from './view/page404/page404.component';
 import { IndexComponent } from './view/index/index.component';
 import { HttpServiceComponent } from './view/http-service/http-service.component';
+import { MaterialTestComponent } from './view/material-test/material-test.component';
 //import { AdminModule } from './admin/admin.module';
 
+//
+import {MatButtonModule} from '@angular/material/button';
+import {MatIconModule} from '@angular/material/icon';
+import {MatToolbarModule} from '@angular/material/toolbar';
+//
 @NgModule({
   imports: [
     BrowserModule,
@@ -39,6 +45,10 @@ import { HttpServiceComponent } from './view/http-service/http-service.component
       cookieName: 'My-Xsrf-Cookie',
       headerName: 'My-Xsrf-Header',
     }),
+
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
 
     // The HttpClientInMemoryWebApiModule module intercepts HTTP requests
     // and returns simulated server responses.
@@ -66,6 +76,7 @@ import { HttpServiceComponent } from './view/http-service/http-service.component
     Page404Component,
     IndexComponent,
     HttpServiceComponent,
+    MaterialTestComponent,
   ],
   providers: [
     AuthService,
