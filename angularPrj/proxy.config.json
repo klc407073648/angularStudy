@@ -1,0 +1,11 @@
+{
+  "/api2": {
+     "target": "http://1.15.109.169:9950/api2"
+  },
+  "/api": {
+    "target": "http://1.15.109.169:9950",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {"^/api":""}
+ }
+}

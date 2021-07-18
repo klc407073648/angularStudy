@@ -1,10 +1,14 @@
 <p>http-service works!</p>
 
+<input (keyup)="onKey($event)">
+<p>{{values}}</p>
+
 <button (click)="getHttp();">get</button>
 <button (click)="showRes();">show</button>
 
-<ul *ngFor="let v of anyList">
-    <h3>{{v.author}}</h3>
-    <h3>{{v.id}}</h3>
-    <h3>{{v.title}}</h3>
-</ul>
+<p>getJason Results</p>
+<p>{{finalRes}}</p>
+<!--ul *ngFor="let v of anyList">
+    <h3>{{v.method}}</h3>
+    <h3>{{v.recvInfo"}}</h3>
+</ul-->

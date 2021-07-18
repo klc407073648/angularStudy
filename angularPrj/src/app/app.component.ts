@@ -10,10 +10,12 @@ export class AppComponent {
   showDownloader = true;
   showUploader = true;
   showSearch = true;
+  showNavMenu = true;
 
   toggleHeroes() { this.showHeroes = !this.showHeroes; }
   toggleConfig() { this.showConfig = !this.showConfig; }
   toggleDownloader() { this.showDownloader = !this.showDownloader; }
   toggleUploader() { this.showUploader = !this.showUploader; }
   toggleSearch() { this.showSearch = !this.showSearch; }
+  toggleNavMenu() { this.showNavMenu = !this.showNavMenu; }
  }
