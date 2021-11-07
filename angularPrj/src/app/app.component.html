@@ -1,36 +1,22 @@
-<h1>HttpClient Example</h1>
+<h1>Still Believe Space</h1>
 
 <div>
-  <input type="checkbox" id="heroes" [checked]="showHeroes" (click)="toggleHeroes()">
-  <label for="heroes">Heroes</label>
+  <input type="checkbox" id="index" [checked]="showIndex" (click)="toggleIndex()">
+  <label for="index">Index</label>
 
-  <input type="checkbox" id="config" [checked]="showConfig" (click)="toggleConfig()">
-  <label for="config">Config</label>
-
-  <input type="checkbox" id="downloader" [checked]="showDownloader" (click)="toggleDownloader()">
-  <label for="downloader">Downloader</label>
-
-  <input type="checkbox" id="uploader" [checked]="showUploader" (click)="toggleUploader()">
-  <label for="uploader">Uploader</label>
-
-  <input type="checkbox" id="search" [checked]="showSearch" (click)="toggleSearch()">
-  <label for="search">Search</label>
+  <input type="checkbox" id="httpService" [checked]="showHttpService" (click)="toggleHttpService()">
+  <label for="httpService">httpService</label>
 
   <input type="checkbox" id="NavMenu" [checked]="showNavMenu" (click)="toggleNavMenu()">
   <label for="NavMenu">NavMenu</label>
 </div>
 
-<app-heroes *ngIf="showHeroes"></app-heroes>
+<app-index *ngIf="showIndex"></app-index>
 <hr />
-<app-messages></app-messages>
+
+<app-http-service *ngIf="showHttpService"></app-http-service>
 <hr />
-<app-config *ngIf="showConfig"></app-config>
-<hr />
-<app-downloader *ngIf="showDownloader"></app-downloader>
-<hr />
-<app-uploader *ngIf="showUploader"></app-uploader>
-<hr />
-<app-package-search *ngIf="showSearch"></app-package-search>
+
 
 <nav *ngIf="showNavMenu">
   <ul>
@@ -49,4 +35,5 @@
   </ul>
 </nav>
 
+<hr />
 <router-outlet></router-outlet>

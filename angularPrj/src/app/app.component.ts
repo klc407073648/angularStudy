@@ -5,17 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html'
 })
 export class AppComponent {
-  showHeroes = true;
-  showConfig = true;
-  showDownloader = true;
-  showUploader = true;
-  showSearch = true;
-  showNavMenu = true;
+  showIndex = false;
+  showHttpService = false;
+  showNavMenu = false;
 
-  toggleHeroes() { this.showHeroes = !this.showHeroes; }
-  toggleConfig() { this.showConfig = !this.showConfig; }
-  toggleDownloader() { this.showDownloader = !this.showDownloader; }
-  toggleUploader() { this.showUploader = !this.showUploader; }
-  toggleSearch() { this.showSearch = !this.showSearch; }
+  toggleIndex() { this.showIndex = !this.showIndex; }
+  toggleHttpService() { this.showHttpService = !this.showHttpService; }
   toggleNavMenu() { this.showNavMenu = !this.showNavMenu; }
  }
