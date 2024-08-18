@@ -17,8 +17,11 @@ export class HttpServiceComponent implements OnInit {
   values='';
   
   getUrl = 'api/posts';
-  geDatatUrl = 'api/orders';
+  #geDatatUrl = 'api/orders';
+  geDatatUrl = 'getTxt';
   finalRes:string=''
+  prefix='http://139.196.82.84:8888'
+  content= ''
 
   /*
   onKey(event: KeyboardEvent) {
@@ -35,6 +38,17 @@ export class HttpServiceComponent implements OnInit {
     //且去掉过滤器index.ts中httpInterceptorProviders
     console.log(this.values);
     this.http.get(this.values)
+    .subscribe(
+    res=>{ this.anyList = res;
+      this.mRes=res;  })
+  }
+
+  getContent() {
+    //需要修改服务端Access-Control-Allow-Origin  *
+    //且去掉过滤器index.ts中httpInterceptorProviders
+    this.content=this.prefix + this.values
+    console.log(this.content);
+    this.http.get(this.content)
     .subscribe(
     res=>{ this.anyList = res;
       this.mRes=res;  })
