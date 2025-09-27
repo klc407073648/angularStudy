@@ -1,0 +1,73 @@
+<!-- app.component.html -->
+<nz-layout style="min-height: 100vh">
+  <!-- 顶部导航 -->
+  <nz-header style="background: #fff; padding: 0">
+    <ul nz-menu nzTheme="light" nzMode="horizontal" style="line-height: 64px">
+      <li
+        nz-menu-item
+        [class.ant-menu-item-selected]="currentModule === 'manage'"
+      >
+        <a routerLink="/manage">用户管理</a>
+      </li>
+      <li
+        nz-menu-item
+        [class.ant-menu-item-selected]="currentModule === 'orders'"
+      >
+        <a routerLink="/welcome">订单管理</a>
+      </li>
+      <li
+        nz-menu-item
+        [class.ant-menu-item-selected]="currentModule === 'settings'"
+      >
+        <a routerLink="/settings">系统设置</a>
+      </li>
+    </ul>
+  </nz-header>
+
+  <nz-layout>
+    <!-- 侧边栏：只在有模块时显示 -->
+    <nz-sider
+      *ngIf="currentModule"
+      width="220"
+      style="background: #fff; border-right: 1px solid #e8e8e8"
+    >
+      <!-- <h3 style="text-align: center; margin: 16px 0; color: #1890ff;">{{ getModuleTitle() }}</h3> -->
+      <ul
+        nz-menu
+        nzTheme="light"
+        nzMode="inline"
+        [nzInlineCollapsed]="isCollapsed"
+      >
+        <li
+          nz-menu-item
+          *ngFor="let item of sidebarMenu"
+          routerLinkActive="ant-menu-item-selected"
+        >
+          <span title>
+            <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
+            <span>{{ item.title }}</span>
+          </span>
+          <a [routerLink]="item.link">{{ item.title }}</a>
+        </li>
+      </ul>
+
+      <!-- <button nz-button nzType="primary" (click)="toggleCollapsed()">
+        <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
+      </button> -->
+    </nz-sider>
+
+    <!-- 内容区 -->
+    <nz-layout style="padding: 0 24px 24px">
+      <nz-content
+        style="
+          margin: 24px 0 0;
+          overflow: initial;
+          background: #fff;
+          padding: 24px;
+        "
+      >
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
