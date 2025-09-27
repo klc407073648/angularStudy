@@ -7,11 +7,11 @@ export interface MenuItem {
 
 export const MENU_CONFIG: { [key: string]: MenuItem[] } = {
   manage: [
-    { title: '用户列表', link: '/users/list', icon: 'user' },
-    { title: '角色管理', link: '/users/roles', icon: 'team' },
+    { title: '用户列表', link: '/manage/list', icon: 'user' },
+    { title: '角色管理', link: '/manage/roles', icon: 'team' },
     {
       title: '权限设置',
-      link: '/users/permissions',
+      link: '/manage/permissions',
       icon: 'safety-certificate',
     },
   ],
