@@ -14,7 +14,7 @@ import { I18nService, SupportedLanguage } from '../../services/i18n.service';
     NzDropDownModule,
     NzButtonModule,
     NzIconModule,
-    NzMenuModule
+    NzMenuModule,
   ],
   templateUrl: './language-switcher.component.html',
   styleUrls: ['./language-switcher.component.css'],

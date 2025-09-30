@@ -10,7 +10,6 @@ import {
   provideClientHydration,
   withEventReplay,
 } from '@angular/platform-browser';
-import { icons } from './icons-provider';
 import { provideNzI18n, zh_CN } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import zh from '@angular/common/locales/zh';

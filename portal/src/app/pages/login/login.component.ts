@@ -1,6 +1,12 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -31,10 +37,10 @@ import { ValidationMessageComponent } from '../../components/validation-message/
     NzMessageModule,
     NzIconModule,
     TranslatePipe,
-    ValidationMessageComponent
+    ValidationMessageComponent,
   ],
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm!: FormGroup;
@@ -51,12 +57,15 @@ export class LoginComponent {
     this.loginForm = this.fb.group({
       username: [null, [Validators.required, usernameValidator]],
       password: [null, [Validators.required, passwordValidator]],
-      remember: [true]
+      remember: [true],
     });
   }
 
   onSubmit(): void {
-    if (!this.loginForm.get('username')?.value || !this.loginForm.get('password')?.value) {
+    if (
+      !this.loginForm.get('username')?.value ||
+      !this.loginForm.get('password')?.value
+    ) {
       this.message.error(this.i18nService.translate('login.fillCompleteInfo'));
       return;
     }
@@ -66,7 +75,9 @@ export class LoginComponent {
       next: (result) => {
         this.loading = false;
         if (result.success) {
-          this.message.success(this.i18nService.translate('login.loginSuccess'));
+          this.message.success(
+            this.i18nService.translate('login.loginSuccess')
+          );
           // 根据用户角色重定向到不同页面
           if (result.user?.role === 'admin') {
             this.router.navigate(['/manage']);
@@ -74,13 +85,15 @@ export class LoginComponent {
             this.router.navigate(['/welcome']);
           }
         } else {
-          this.message.error(this.i18nService.translate('login.invalidCredentials'));
+          this.message.error(
+            this.i18nService.translate('login.invalidCredentials')
+          );
         }
       },
       error: () => {
         this.loading = false;
         this.message.error(this.i18nService.translate('login.loginFailed'));
-      }
+      },
     });
   }
-} 
+}

@@ -7,28 +7,28 @@ import { AuthGuard } from '../../guards/auth.guard';
 import { AdminGuard } from '../../guards/admin.guard';
 
 export const MANAGE_ROUTES: Routes = [
-  { 
-    path: '', 
-    component: ManageComponent, 
+  {
+    path: '',
+    component: ManageComponent,
     data: { module: 'manage' },
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
   },
-  { 
-    path: 'list', 
-    component: ListComponent, 
+  {
+    path: 'list',
+    component: ListComponent,
     data: { module: 'manage' },
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
-  { 
-    path: 'roles', 
-    component: RoleComponent, 
+  {
+    path: 'roles',
+    component: RoleComponent,
     data: { module: 'manage' },
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
   },
-  { 
-    path: 'permissions', 
-    component: PermissionComponent, 
+  {
+    path: 'permissions',
+    component: PermissionComponent,
     data: { module: 'manage' },
-    canActivate: [AuthGuard, AdminGuard]
+    canActivate: [AuthGuard, AdminGuard],
   },
 ];

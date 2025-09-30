@@ -39,7 +39,7 @@ import { I18nService } from './services/i18n.service';
     LanguageSwitcherComponent,
     TranslatePipe,
     NgIf,
-    NgFor
+    NgFor,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -69,7 +69,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // 监听用户状态变化
-    this.authService.currentUser$.subscribe(user => {
+    this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
     });
 
@@ -106,18 +106,18 @@ export class AppComponent implements OnInit {
 
   private filterMenuByPermission(menuItems: MenuItem[]): MenuItem[] {
     if (!this.currentUser) return [];
-    
-    return menuItems.filter(item => {
+
+    return menuItems.filter((item) => {
       // 检查角色权限
       if (item.roles && !item.roles.includes(this.currentUser!.role)) {
         return false;
       }
-      
+
       // 检查具体权限
       if (item.permission && !this.authService.hasPermission(item.permission)) {
         return false;
       }
-      
+
       return true;
     });
   }
@@ -136,8 +136,8 @@ export class AppComponent implements OnInit {
   }
 
   getUserRoleText(): string {
-    return this.currentUser?.role === 'admin' ? 
-      this.i18nService.translate('common.admin') : 
-      this.i18nService.translate('common.user');
+    return this.currentUser?.role === 'admin'
+      ? this.i18nService.translate('common.admin')
+      : this.i18nService.translate('common.user');
   }
 }

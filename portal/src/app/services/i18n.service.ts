@@ -11,12 +11,12 @@ export interface Translation {
 export type SupportedLanguage = 'zh' | 'en';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class I18nService {
   private currentLanguageSubject = new BehaviorSubject<SupportedLanguage>('zh');
   public currentLanguage$ = this.currentLanguageSubject.asObservable();
-  
+
   private translations: { [key: string]: Translation } = {};
   private readonly defaultLanguage: SupportedLanguage = 'zh';
   private readonly supportedLanguages: SupportedLanguage[] = ['zh', 'en'];
@@ -27,15 +27,18 @@ export class I18nService {
   ) {
     // 从本地存储获取语言设置（仅在浏览器环境中）
     if (isPlatformBrowser(this.platformId)) {
-      const savedLanguage = localStorage.getItem('preferredLanguage') as SupportedLanguage;
+      const savedLanguage = localStorage.getItem(
+        'preferredLanguage'
+      ) as SupportedLanguage;
       if (savedLanguage && this.supportedLanguages.includes(savedLanguage)) {
         this.currentLanguageSubject.next(savedLanguage);
       }
     }
-    
+
     // 立即加载默认翻译（避免异步加载问题）
-    this.translations[this.currentLanguageSubject.value] = this.getDefaultTranslations(this.currentLanguageSubject.value);
-    
+    this.translations[this.currentLanguageSubject.value] =
+      this.getDefaultTranslations(this.currentLanguageSubject.value);
+
     // 在浏览器环境中异步加载完整翻译文件
     if (isPlatformBrowser(this.platformId)) {
       this.loadTranslations(this.currentLanguageSubject.value);
@@ -57,7 +60,7 @@ export class I18nService {
       // 立即设置默认翻译，避免显示空白
       this.translations[language] = this.getDefaultTranslations(language);
       this.currentLanguageSubject.next(language);
-      
+
       // 仅在浏览器环境中保存到localStorage
       if (isPlatformBrowser(this.platformId)) {
         localStorage.setItem('preferredLanguage', language);
@@ -79,15 +82,17 @@ export class I18nService {
    */
   translate(key: string, params?: { [key: string]: any }): string {
     const currentLang = this.currentLanguageSubject.value;
-    
+
     // 确保当前语言的翻译已加载
     if (!this.translations[currentLang]) {
       this.translations[currentLang] = this.getDefaultTranslations(currentLang);
     }
-    
+
     const translation = this.getTranslationByKey(key);
     if (!translation) {
-      console.warn(`Translation missing for key: ${key} in language: ${currentLang}`);
+      console.warn(
+        `Translation missing for key: ${key} in language: ${currentLang}`
+      );
       return key;
     }
 
@@ -101,10 +106,11 @@ export class I18nService {
   /**
    * 获取翻译文本的Observable
    */
-  translateAsync(key: string, params?: { [key: string]: any }): Observable<string> {
-    return this.currentLanguage$.pipe(
-      map(() => this.translate(key, params))
-    );
+  translateAsync(
+    key: string,
+    params?: { [key: string]: any }
+  ): Observable<string> {
+    return this.currentLanguage$.pipe(map(() => this.translate(key, params)));
   }
 
   /**
@@ -128,16 +134,17 @@ export class I18nService {
       return;
     }
 
-    this.http.get<Translation>(`/assets/i18n/${language}.json`)
+    this.http
+      .get<Translation>(`/assets/i18n/${language}.json`)
       .pipe(
-        catchError(error => {
+        catchError((error) => {
           console.error(`Failed to load translations for ${language}:`, error);
           // 如果加载失败，使用默认翻译
           this.translations[language] = this.getDefaultTranslations(language);
           return of({});
         })
       )
-      .subscribe(translations => {
+      .subscribe((translations) => {
         this.translations[language] = translations;
       });
   }
@@ -152,12 +159,12 @@ export class I18nService {
           username: '用户名',
           password: '密码',
           admin: '管理员',
-          user: '普通用户'
+          user: '普通用户',
         },
         navigation: {
           userManagement: '用户管理',
           orderManagement: '订单管理',
-          systemSettings: '系统设置'
+          systemSettings: '系统设置',
         },
         login: {
           title: '系统登录',
@@ -167,8 +174,8 @@ export class I18nService {
           loginButton: '登录',
           testAccounts: '测试账号：',
           adminAccount: '管理员：admin / admin123',
-          userAccount: '普通用户：user / user123'
-        }
+          userAccount: '普通用户：user / user123',
+        },
       };
     } else {
       return {
@@ -178,12 +185,12 @@ export class I18nService {
           username: 'Username',
           password: 'Password',
           admin: 'Administrator',
-          user: 'User'
+          user: 'User',
         },
         navigation: {
           userManagement: 'User Management',
           orderManagement: 'Order Management',
-          systemSettings: 'System Settings'
+          systemSettings: 'System Settings',
         },
         login: {
           title: 'System Login',
@@ -193,8 +200,8 @@ export class I18nService {
           loginButton: 'Login',
           testAccounts: 'Test accounts:',
           adminAccount: 'Admin: admin / admin123',
-          userAccount: 'User: user / user123'
-        }
+          userAccount: 'User: user / user123',
+        },
       };
     }
   }
@@ -204,7 +211,10 @@ export class I18nService {
    */
   private getTranslationByKey(key: string): string | null {
     const currentLang = this.currentLanguageSubject.value;
-    const translation = this.getNestedValue(this.translations[currentLang], key);
+    const translation = this.getNestedValue(
+      this.translations[currentLang],
+      key
+    );
     return translation || null;
   }
 
@@ -231,8 +241,8 @@ export class I18nService {
    */
   getLanguageDisplayName(language: SupportedLanguage): string {
     const displayNames: { [key in SupportedLanguage]: string } = {
-      'zh': '中文',
-      'en': 'English'
+      zh: '中文',
+      en: 'English',
     };
     return displayNames[language];
   }
@@ -242,8 +252,8 @@ export class I18nService {
    */
   getLanguageFlag(language: SupportedLanguage): string {
     const flags: { [key in SupportedLanguage]: string } = {
-      'zh': '🇨🇳',
-      'en': '🇺🇸'
+      zh: '🇨🇳',
+      en: '🇺🇸',
     };
     return flags[language];
   }

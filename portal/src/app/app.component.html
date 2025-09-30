@@ -1,48 +1,61 @@
 <!-- app.component.html -->
 <nz-layout style="min-height: 100vh">
   <!-- 顶部导航 -->
-  <nz-header style="background: #fff; padding: 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e8e8e8">
-    <ul nz-menu nzTheme="light" nzMode="horizontal" style="line-height: 64px; flex: 1">
+  <nz-header
+    style="
+      background: #fff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #e8e8e8;
+    "
+  >
+    <ul
+      nz-menu
+      nzTheme="light"
+      nzMode="horizontal"
+      style="line-height: 64px; flex: 1"
+    >
       <li
         nz-menu-item
         [class.ant-menu-item-selected]="currentModule === 'manage'"
       >
-        <a routerLink="/manage">{{ 'navigation.userManagement' | translate }}</a>
+        <a routerLink="/manage">{{
+          'navigation.userManagement' | translate
+        }}</a>
       </li>
       <li
         nz-menu-item
         [class.ant-menu-item-selected]="currentModule === 'orders'"
       >
-        <a routerLink="/welcome">{{ 'navigation.orderManagement' | translate }}</a>
+        <a routerLink="/welcome">{{
+          'navigation.orderManagement' | translate
+        }}</a>
       </li>
       <li
         nz-menu-item
         [class.ant-menu-item-selected]="currentModule === 'settings'"
       >
-        <a routerLink="/settings">{{ 'navigation.systemSettings' | translate }}</a>
+        <a routerLink="/settings">{{
+          'navigation.systemSettings' | translate
+        }}</a>
       </li>
     </ul>
-    
-    <!-- 用户信息和语言切换 -->
-    <div style="padding-right: 24px; display: flex; align-items: center; gap: 16px;">
-      <!-- 语言切换器 -->
+    <!-- 右侧组合：语言切换 + 用户信息 -->
+    <div style="display: flex; align-items: center; gap: 16px; padding: 10">
       <app-language-switcher></app-language-switcher>
-      
-      <!-- 用户信息 -->
-      <nz-dropdown [nzTrigger]="'click'">
-        <div nz-dropdown style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
-          <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
-          <span>{{ getUserDisplayName() }}</span>
-          <span style="color: #1890ff; font-size: 12px;">({{ getUserRoleText() }})</span>
-          <i nz-icon nzType="down"></i>
-        </div>
-        <ul nz-menu>
-          <li nz-menu-item (click)="logout()">
-            <i nz-icon nzType="logout"></i>
-            {{ 'common.logout' | translate }}
-          </li>
-        </ul>
-      </nz-dropdown>
+
+      @if (this.currentUser) {
+        <button nz-menu-item (click)="logout()">
+          <i nz-icon nzType="logout"></i>
+          {{ 'common.logout' | translate }}
+        </button>
+      }
+      <!-- @else {
+      <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
+      <span>{{ getUserDisplayName() }}</span>
+      <span style="color: #1890ff; font-size: 12px">({{ getUserRoleText() }})</span>
+    } -->
     </div>
   </nz-header>
 
