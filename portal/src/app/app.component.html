@@ -1,27 +1,49 @@
 <!-- app.component.html -->
 <nz-layout style="min-height: 100vh">
   <!-- 顶部导航 -->
-  <nz-header style="background: #fff; padding: 0">
-    <ul nz-menu nzTheme="light" nzMode="horizontal" style="line-height: 64px">
+  <nz-header style="background: #fff; padding: 0; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e8e8e8">
+    <ul nz-menu nzTheme="light" nzMode="horizontal" style="line-height: 64px; flex: 1">
       <li
         nz-menu-item
         [class.ant-menu-item-selected]="currentModule === 'manage'"
       >
-        <a routerLink="/manage">用户管理</a>
+        <a routerLink="/manage">{{ 'navigation.userManagement' | translate }}</a>
       </li>
       <li
         nz-menu-item
         [class.ant-menu-item-selected]="currentModule === 'orders'"
       >
-        <a routerLink="/welcome">订单管理</a>
+        <a routerLink="/welcome">{{ 'navigation.orderManagement' | translate }}</a>
       </li>
       <li
         nz-menu-item
         [class.ant-menu-item-selected]="currentModule === 'settings'"
       >
-        <a routerLink="/settings">系统设置</a>
+        <a routerLink="/settings">{{ 'navigation.systemSettings' | translate }}</a>
       </li>
     </ul>
+    
+    <!-- 用户信息和语言切换 -->
+    <div style="padding-right: 24px; display: flex; align-items: center; gap: 16px;">
+      <!-- 语言切换器 -->
+      <app-language-switcher></app-language-switcher>
+      
+      <!-- 用户信息 -->
+      <nz-dropdown [nzTrigger]="'click'">
+        <div nz-dropdown style="cursor: pointer; display: flex; align-items: center; gap: 8px;">
+          <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
+          <span>{{ getUserDisplayName() }}</span>
+          <span style="color: #1890ff; font-size: 12px;">({{ getUserRoleText() }})</span>
+          <i nz-icon nzType="down"></i>
+        </div>
+        <ul nz-menu>
+          <li nz-menu-item (click)="logout()">
+            <i nz-icon nzType="logout"></i>
+            {{ 'common.logout' | translate }}
+          </li>
+        </ul>
+      </nz-dropdown>
+    </div>
   </nz-header>
 
   <nz-layout>
@@ -31,7 +53,6 @@
       width="220"
       style="background: #fff; border-right: 1px solid #e8e8e8"
     >
-      <!-- <h3 style="text-align: center; margin: 16px 0; color: #1890ff;">{{ getModuleTitle() }}</h3> -->
       <ul
         nz-menu
         nzTheme="light"
@@ -45,15 +66,11 @@
         >
           <span title>
             <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
-            <span>{{ item.title }}</span>
+            <span>{{ item.title | translate }}</span>
           </span>
-          <a [routerLink]="item.link">{{ item.title }}</a>
+          <a [routerLink]="item.link">{{ item.title | translate }}</a>
         </li>
       </ul>
-
-      <!-- <button nz-button nzType="primary" (click)="toggleCollapsed()">
-        <nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" />
-      </button> -->
     </nz-sider>
 
     <!-- 内容区 -->

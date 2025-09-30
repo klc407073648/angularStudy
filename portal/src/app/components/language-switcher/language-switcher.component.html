@@ -1,0 +1,31 @@
+<nz-dropdown nzTrigger="click" nzPlacement="bottomRight">
+      <button 
+        nz-button 
+        nzType="text" 
+        nz-dropdown
+        class="language-switcher-btn"
+      >
+        <span class="flag">{{ getCurrentLanguageFlag() }}</span>
+        <span class="language-name">{{ getCurrentLanguageName() }}</span>
+        <i nz-icon nzType="down" nzTheme="outline"></i>
+      </button>
+      
+      <ul nz-menu>
+        <li 
+          nz-menu-item 
+          *ngFor="let lang of supportedLanguages"
+          [class.ant-menu-item-selected]="lang === currentLanguage"
+          (click)="changeLanguage(lang)"
+        >
+          <span class="flag">{{ getLanguageFlag(lang) }}</span>
+          <span class="language-name">{{ getLanguageDisplayName(lang) }}</span>
+          <i 
+            nz-icon 
+            nzType="check" 
+            nzTheme="outline" 
+            *ngIf="lang === currentLanguage"
+            class="check-icon"
+          ></i>
+        </li>
+      </ul>
+    </nz-dropdown>

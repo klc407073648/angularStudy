@@ -1,0 +1,65 @@
+<div class="login-container">
+  <nz-card class="login-card" [nzBordered]="false">
+    <div class="login-header">
+      <h2>{{ 'login.title' | translate }}</h2>
+      <p>{{ 'login.subtitle' | translate }}</p>
+    </div>
+    
+    <form nz-form [nzLayout]="'vertical'" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <nz-form-item>
+        <nz-form-label>{{ 'common.username' | translate }}</nz-form-label>
+        <nz-input-group>
+          <input 
+            nz-input 
+            formControlName="username"
+            [placeholder]="'login.usernamePlaceholder' | translate"
+            [nzSize]="'large'"
+          />
+          <app-validation-message [control]="loginForm.get('username')"></app-validation-message>
+        </nz-input-group>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label>{{ 'common.password' | translate }}</nz-form-label>
+        <nz-input-group [nzSuffix]="suffixTemplate">
+          <input 
+            nz-input 
+            [type]="passwordVisible ? 'text' : 'password'"
+            formControlName="password"
+            [placeholder]="'login.passwordPlaceholder' | translate"
+            [nzSize]="'large'"
+          />
+          <app-validation-message [control]="loginForm.get('password')"></app-validation-message>
+        </nz-input-group>
+      </nz-form-item>
+
+      <nz-form-item>
+        <button 
+          nz-button 
+          nzType="primary" 
+          nzBlock 
+          [nzSize]="'large'"
+          [nzLoading]="loading"
+          type="submit"
+        >
+          {{ 'login.loginButton' | translate }}
+        </button>
+      </nz-form-item>
+    </form>
+
+    <div class="login-tips">
+      <p><strong>{{ 'login.testAccounts' | translate }}</strong></p>
+      <p>{{ 'login.adminAccount' | translate }}</p>
+      <p>{{ 'login.userAccount' | translate }}</p>
+    </div>
+  </nz-card>
+</div>
+
+
+<ng-template #suffixTemplate>
+  <nz-icon
+    class="ant-input-password-icon"
+    [nzType]="passwordVisible ? 'eye-invisible' : 'eye'"
+    (click)="passwordVisible = !passwordVisible"
+  />
+</ng-template>
