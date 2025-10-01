@@ -4,6 +4,9 @@
     "logout": "Logout",
     "username": "Username",
     "password": "Password",
+    "email": "Email",
+    "name": "Name",
+    "confirmPassword": "Confirm Password",
     "remember": "Remember me",
     "submit": "Submit",
     "cancel": "Cancel",
@@ -30,6 +33,11 @@
     "admin": "Administrator",
     "user": "User"
   },
+  "language": {
+    "chooseLanguage": "Choose Language",
+    "chinese": "Chinese",
+    "english": "English"
+  },
   "login": {
     "title": "System Login",
     "subtitle": "Please enter your login credentials",
@@ -42,15 +50,36 @@
     "fillCompleteInfo": "Please fill in complete login information",
     "testAccounts": "Test accounts:",
     "adminAccount": "Admin: admin / admin123",
-    "userAccount": "User: user / user123"
+    "userAccount": "User: user / user123",
+    "noAccount": "Don't have an account?",
+    "goToRegister": "Register now"
+  },
+  "register": {
+    "title": "User Registration",
+    "subtitle": "Create your account",
+    "namePlaceholder": "Please enter your name",
+    "emailPlaceholder": "Please enter your email",
+    "usernamePlaceholder": "Please enter username",
+    "passwordPlaceholder": "Please enter password",
+    "confirmPasswordPlaceholder": "Please confirm password",
+    "registerButton": "Register",
+    "registerSuccess": "Registration successful",
+    "registerFailed": "Registration failed, please try again later",
+    "fillCompleteInfo": "Please fill in complete registration information",
+    "hasAccount": "Already have an account?",
+    "goToLogin": "Login now"
   },
   "validation": {
     "required": "This field is required",
     "usernameRequired": "Please enter username",
     "passwordRequired": "Please enter password",
+    "nameRequired": "Please enter your name",
+    "emailRequired": "Please enter your email",
+    "emailInvalid": "Invalid email format",
     "usernameInvalidChars": "Username can only contain letters, numbers, and underscores",
     "usernameInvalidLength": "Username length must be between 3-20 characters",
-    "passwordStrength": "Password must contain uppercase letters, lowercase letters, numbers, special characters, and be at least 8 characters long"
+    "passwordStrength": "Password must contain uppercase letters, lowercase letters, numbers, special characters, and be at least 8 characters long",
+    "passwordMismatch": "Passwords do not match"
   },
   "navigation": {
     "userManagement": "User Management",
@@ -97,3 +126,5 @@
     "unknownError": "Unknown error"
   }
 }
+
+

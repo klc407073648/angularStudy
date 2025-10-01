@@ -4,10 +4,9 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTagModule } from 'ng-zorro-antd/tag';
-import { AuthService } from '../../services/auth.service';
+import { AuthHttpService } from '../../services/auth-http.service';
 import { User } from '../../model/user.model';
-import { TranslatePipe } from '../../pipes/translate.pipe';
-import { I18nService } from '../../services/i18n.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-welcome',
@@ -18,18 +17,15 @@ import { I18nService } from '../../services/i18n.service';
     NzIconModule,
     NzButtonModule,
     NzTagModule,
-    TranslatePipe,
+    TranslateModule,
   ],
-  templateUrl : './welcome.component.html',
+  templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.css'],
 })
 export class WelcomeComponent implements OnInit {
   currentUser: User | null = null;
 
-  constructor(
-    private authService: AuthService,
-    private i18nService: I18nService
-  ) {}
+  constructor(private authService: AuthHttpService) {}
 
   ngOnInit() {
     this.authService.currentUser$.subscribe((user) => {

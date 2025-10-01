@@ -3,10 +3,7 @@
     <div class="welcome-header">
       <h1>{{ 'welcome.title' | translate }}</h1>
       <p>
-        {{
-          'welcome.greeting'
-            | translate: { name: currentUser?.name || currentUser?.username }
-        }}
+        {{ 'welcome.greeting' | translate: { name: currentUser?.username } }}
       </p>
     </div>
 
@@ -22,10 +19,6 @@
             >{{ 'welcome.username' | translate
             }}{{ currentUser?.username }}</span
           >
-        </div>
-        <div class="info-item">
-          <i nz-icon nzType="mail" nzTheme="outline"></i>
-          <span>{{ 'welcome.email' | translate }}{{ currentUser?.email }}</span>
         </div>
         <div class="info-item">
           <i nz-icon nzType="safety-certificate" nzTheme="outline"></i>

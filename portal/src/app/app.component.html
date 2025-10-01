@@ -10,53 +10,54 @@
       border-bottom: 1px solid #e8e8e8;
     "
   >
-    <ul
-      nz-menu
-      nzTheme="light"
-      nzMode="horizontal"
-      style="line-height: 64px; flex: 1"
-    >
-      <li
-        nz-menu-item
-        [class.ant-menu-item-selected]="currentModule === 'manage'"
+    @if (this.currentUser) {
+      <ul
+        nz-menu
+        nzTheme="light"
+        nzMode="horizontal"
+        style="line-height: 64px; flex: 1"
       >
-        <a routerLink="/manage">{{
-          'navigation.userManagement' | translate
-        }}</a>
-      </li>
-      <li
-        nz-menu-item
-        [class.ant-menu-item-selected]="currentModule === 'orders'"
-      >
-        <a routerLink="/welcome">{{
-          'navigation.orderManagement' | translate
-        }}</a>
-      </li>
-      <li
-        nz-menu-item
-        [class.ant-menu-item-selected]="currentModule === 'settings'"
-      >
-        <a routerLink="/settings">{{
-          'navigation.systemSettings' | translate
-        }}</a>
-      </li>
-    </ul>
-    <!-- 右侧组合：语言切换 + 用户信息 -->
-    <div style="display: flex; align-items: center; gap: 16px; padding: 10">
-      <app-language-switcher></app-language-switcher>
+        <li
+          nz-menu-item
+          [class.ant-menu-item-selected]="currentModule === 'manage'"
+        >
+          <a routerLink="/manage">{{
+            'navigation.userManagement' | translate
+          }}</a>
+        </li>
+        <li
+          nz-menu-item
+          [class.ant-menu-item-selected]="currentModule === 'orders'"
+        >
+          <a routerLink="/welcome">{{
+            'navigation.orderManagement' | translate
+          }}</a>
+        </li>
+        <li
+          nz-menu-item
+          [class.ant-menu-item-selected]="currentModule === 'settings'"
+        >
+          <a routerLink="/settings">{{
+            'navigation.systemSettings' | translate
+          }}</a>
+        </li>
+      </ul>
+      <!-- 右侧组合：语言切换 + 用户信息 -->
+      <div style="display: flex; align-items: center; gap: 16px; padding: 10">
+        <app-language-switcher></app-language-switcher>
 
-      @if (this.currentUser) {
-        <button nz-menu-item (click)="logout()">
+        <button nz-button nzType="primary" (click)="logout()">
           <i nz-icon nzType="logout"></i>
           {{ 'common.logout' | translate }}
         </button>
-      }
-      <!-- @else {
+
+        <!-- @else {
       <nz-avatar [nzSize]="'small'" nzIcon="user"></nz-avatar>
       <span>{{ getUserDisplayName() }}</span>
       <span style="color: #1890ff; font-size: 12px">({{ getUserRoleText() }})</span>
     } -->
-    </div>
+      </div>
+    }
   </nz-header>
 
   <nz-layout>

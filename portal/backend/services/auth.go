@@ -116,6 +116,51 @@ func (s *AuthService) getUserPermissions(role models.UserRole) []string {
 	return []string{}
 }
 
+// 用户注册
+func (s *AuthService) Register(req *models.RegisterRequest) (*models.RegisterResponse, error) {
+	// 检查用户名是否已存在
+	var existingUser models.User
+	if err := s.db.Where("username = ?", req.Username).First(&existingUser).Error; err == nil {
+		return nil, errors.New("用户名已存在")
+	}
+
+	// 加密密码
+	hashedPassword, err := HashPassword(req.Password)
+	if err != nil {
+		return nil, errors.New("密码加密失败")
+	}
+
+	// 创建新用户
+	user := models.User{
+		Username: req.Username,
+		Password: hashedPassword,
+		Role:     models.RoleUser, // 默认为普通用户
+	}
+
+	if err := s.db.Create(&user).Error; err != nil {
+		return nil, errors.New("创建用户失败")
+	}
+
+	// 生成JWT令牌
+	token, err := utils.GenerateToken(user.ID, user.Username, string(user.Role))
+	if err != nil {
+		return nil, err
+	}
+
+	// 生成刷新令牌
+	refreshToken, err := utils.GenerateRefreshToken(user.ID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &models.RegisterResponse{
+		User:         user,
+		Token:        token,
+		RefreshToken: refreshToken,
+		ExpiresIn:    24 * 60 * 60, // 24小时
+	}, nil
+}
+
 // 密码加密
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)

@@ -63,6 +63,13 @@
       <p>{{ 'login.adminAccount' | translate }}</p>
       <p>{{ 'login.userAccount' | translate }}</p>
     </div>
+
+    <div class="login-footer">
+      <p>
+        {{ 'login.noAccount' | translate }}
+        <a (click)="goToRegister()">{{ 'login.goToRegister' | translate }}</a>
+      </p>
+    </div>
   </nz-card>
 </div>
 

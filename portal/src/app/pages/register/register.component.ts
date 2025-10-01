@@ -16,13 +16,17 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { AuthHttpService } from '../../services/auth-http.service';
-import { LoginRequest } from '../../model/user.model';
-import { passwordValidator, usernameValidator } from '../../common/validator';
+import { RegisterRequest } from '../../model/user.model';
+import {
+  passwordValidator,
+  usernameValidator,
+  confirmPasswordValidator,
+} from '../../common/validator';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ValidationMessageComponent } from '../../components/validation-message/validation-message.component';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-register',
   standalone: true,
   imports: [
     CommonModule,
@@ -38,13 +42,14 @@ import { ValidationMessageComponent } from '../../components/validation-message/
     TranslateModule,
     ValidationMessageComponent,
   ],
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css'],
 })
-export class LoginComponent {
-  loginForm!: FormGroup;
+export class RegisterComponent {
+  registerForm!: FormGroup;
   loading = false;
   passwordVisible = false;
+  confirmPasswordVisible = false;
 
   constructor(
     private authService: AuthHttpService,
@@ -53,33 +58,41 @@ export class LoginComponent {
     private fb: FormBuilder,
     private translate: TranslateService
   ) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       username: [null, [Validators.required, usernameValidator]],
       password: [null, [Validators.required, passwordValidator]],
-      remember: [true],
+      confirmPassword: [
+        null,
+        [Validators.required, confirmPasswordValidator('password')],
+      ],
     });
   }
 
   onSubmit(): void {
-    if (
-      !this.loginForm.get('username')?.value ||
-      !this.loginForm.get('password')?.value
-    ) {
-      this.message.error(this.translate.instant('login.fillCompleteInfo'));
+    // 标记所有字段为已触碰，以显示验证错误
+    Object.values(this.registerForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.updateValueAndValidity();
+    });
+
+    if (this.registerForm.invalid) {
+      this.message.error(this.translate.instant('register.fillCompleteInfo'));
       return;
     }
 
     this.loading = true;
-    const loginRequest: LoginRequest = {
-      username: this.loginForm.get('username')?.value,
-      password: this.loginForm.get('password')?.value,
+    const registerRequest: RegisterRequest = {
+      username: this.registerForm.get('username')?.value,
+      password: this.registerForm.get('password')?.value,
     };
 
-    this.authService.login(loginRequest).subscribe({
+    this.authService.register(registerRequest).subscribe({
       next: (result) => {
         this.loading = false;
         if (result.success && result.data) {
-          this.message.success(this.translate.instant('login.loginSuccess'));
+          this.message.success(
+            this.translate.instant('register.registerSuccess')
+          );
           // 根据用户角色重定向到不同页面
           if (result.data.user.role === 'admin') {
             this.router.navigate(['/manage']);
@@ -88,20 +101,20 @@ export class LoginComponent {
           }
         } else {
           this.message.error(
-            result.message || this.translate.instant('login.invalidCredentials')
+            result.message || this.translate.instant('register.registerFailed')
           );
         }
       },
       error: (error) => {
         this.loading = false;
         this.message.error(
-          error.message || this.translate.instant('login.loginFailed')
+          error.message || this.translate.instant('register.registerFailed')
         );
       },
     });
   }
 
-  goToRegister(): void {
-    this.router.navigate(['/register']);
+  goToLogin(): void {
+    this.router.navigate(['/login']);
   }
 }

@@ -50,6 +50,7 @@ func main() {
 		auth := api.Group("/auth")
 		{
 			auth.POST("/login", authHandler.Login)
+			auth.POST("/register", authHandler.Register)
 			auth.POST("/logout", authHandler.Logout)
 			auth.POST("/refresh", authHandler.RefreshToken)
 			auth.GET("/me", middleware.AuthMiddleware(), authHandler.GetCurrentUser)
@@ -70,9 +71,7 @@ func createDefaultAdmin(db *gorm.DB) {
 		admin := models.User{
 			Username: "admin",
 			Password: hashedPassword,
-			Email:    "admin@example.com",
 			Role:     models.RoleAdmin,
-			Name:     "管理员",
 		}
 		db.Create(&admin)
 		log.Println("默认管理员用户已创建: admin/admin123")

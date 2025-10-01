@@ -21,3 +21,4 @@ type RefreshTokenResponse struct {
 	RefreshToken string `json:"refreshToken"`
 	ExpiresIn    int64  `json:"expiresIn"`
 }
+

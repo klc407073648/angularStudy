@@ -13,9 +13,7 @@ type User struct {
 	ID          uint       `json:"id" gorm:"primaryKey"`
 	Username    string     `json:"username" gorm:"uniqueIndex;not null"`
 	Password    string     `json:"-" gorm:"not null"` // 不在JSON中返回
-	Email       string     `json:"email" gorm:"uniqueIndex;not null"`
 	Role        UserRole   `json:"role" gorm:"default:'user'"`
-	Name        string     `json:"name" gorm:"not null"`
 	Avatar      string     `json:"avatar,omitempty"`
 	LastLoginAt *time.Time `json:"lastLoginAt,omitempty"`
 	CreatedAt   time.Time  `json:"createdAt"`
@@ -28,6 +26,18 @@ type LoginRequest struct {
 }
 
 type LoginResponse struct {
+	User         User   `json:"user"`
+	Token        string `json:"token"`
+	RefreshToken string `json:"refreshToken,omitempty"`
+	ExpiresIn    int64  `json:"expiresIn"`
+}
+
+type RegisterRequest struct {
+	Username string `json:"username" binding:"required,min=3,max=20"`
+	Password string `json:"password" binding:"required,min=8"`
+}
+
+type RegisterResponse struct {
 	User         User   `json:"user"`
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken,omitempty"`

@@ -118,3 +118,34 @@ func (h *AuthHandler) Logout(c *gin.Context) {
 		Code:    200,
 	})
 }
+
+// 用户注册
+func (h *AuthHandler) Register(c *gin.Context) {
+	var req models.RegisterRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, models.ApiResponse{
+			Success: false,
+			Message: "请求参数错误",
+			Code:    400,
+		})
+		return
+	}
+
+	registerResp, err := h.authService.Register(&req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, models.ApiResponse{
+			Success: false,
+			Message: err.Error(),
+			Code:    400,
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, models.ApiResponse{
+		Success: true,
+		Message: "注册成功",
+		Data:    registerResp,
+		Code:    200,
+	})
+}

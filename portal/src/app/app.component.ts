@@ -17,11 +17,10 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NgFor, NgIf } from '@angular/common';
-import { AuthService } from './services/auth.service';
+import { AuthHttpService } from './services/auth-http.service';
 import { User } from './model/user.model';
 import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
-import { TranslatePipe } from './pipes/translate.pipe';
-import { I18nService } from './services/i18n.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -37,7 +36,7 @@ import { I18nService } from './services/i18n.service';
     NzDropDownModule,
     NzAvatarModule,
     LanguageSwitcherComponent,
-    TranslatePipe,
+    TranslateModule,
     NgIf,
     NgFor,
   ],
@@ -63,14 +62,22 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService,
-    private i18nService: I18nService
+    private authService: AuthHttpService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
+    // 初始化翻译服务
+    this.translate.setDefaultLang('zh');
+    this.translate.use('zh');
+
     // 监听用户状态变化
     this.authService.currentUser$.subscribe((user) => {
       this.currentUser = user;
+      console.log('[app.component] this.currentUser:', this.currentUser);
+      if (this.currentUser) {
+        console.log('[app.component] this.currentUser1111:', this.currentUser);
+      }
     });
 
     // 监听路由变化
@@ -127,17 +134,24 @@ export class AppComponent implements OnInit {
   }
 
   logout(): void {
-    this.authService.logout();
-    this.router.navigate(['/login']);
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        // 即使登出失败，也跳转到登录页
+        this.router.navigate(['/login']);
+      },
+    });
   }
 
   getUserDisplayName(): string {
-    return this.currentUser?.name || this.currentUser?.username || '未知用户';
+    return this.currentUser?.username || '未知用户';
   }
 
   getUserRoleText(): string {
     return this.currentUser?.role === 'admin'
-      ? this.i18nService.translate('common.admin')
-      : this.i18nService.translate('common.user');
+      ? this.translate.instant('common.admin')
+      : this.translate.instant('common.user');
   }
 }

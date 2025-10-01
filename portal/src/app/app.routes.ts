@@ -10,6 +10,11 @@ export const routes: Routes = [
       import('./pages/login/login.routes').then((m) => m.LOGIN_ROUTES),
   },
   {
+    path: 'register',
+    loadChildren: () =>
+      import('./pages/register/register.routes').then((m) => m.REGISTER_ROUTES),
+  },
+  {
     path: 'index',
     component: MenuComponent,
     canActivate: [AuthGuard],

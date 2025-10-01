@@ -4,6 +4,9 @@
     "logout": "退出登录",
     "username": "用户名",
     "password": "密码",
+    "email": "邮箱",
+    "name": "姓名",
+    "confirmPassword": "确认密码",
     "remember": "记住我",
     "submit": "提交",
     "cancel": "取消",
@@ -30,6 +33,11 @@
     "admin": "管理员",
     "user": "普通用户"
   },
+  "language": {
+    "chooseLanguage": "选择语言",
+    "chinese": "中文",
+    "english": "英文"
+  },
   "login": {
     "title": "系统登录",
     "subtitle": "请输入您的登录凭据",
@@ -42,15 +50,36 @@
     "fillCompleteInfo": "请填写完整的登录信息",
     "testAccounts": "测试账号：",
     "adminAccount": "管理员：admin / admin123",
-    "userAccount": "普通用户：user / user123"
+    "userAccount": "普通用户：user / user123",
+    "noAccount": "还没有账号？",
+    "goToRegister": "立即注册"
+  },
+  "register": {
+    "title": "用户注册",
+    "subtitle": "创建您的账号",
+    "namePlaceholder": "请输入姓名",
+    "emailPlaceholder": "请输入邮箱",
+    "usernamePlaceholder": "请输入用户名",
+    "passwordPlaceholder": "请输入密码",
+    "confirmPasswordPlaceholder": "请再次输入密码",
+    "registerButton": "注册",
+    "registerSuccess": "注册成功",
+    "registerFailed": "注册失败，请稍后重试",
+    "fillCompleteInfo": "请填写完整的注册信息",
+    "hasAccount": "已有账号？",
+    "goToLogin": "立即登录"
   },
   "validation": {
     "required": "此字段为必填项",
     "usernameRequired": "请输入用户名",
     "passwordRequired": "请输入密码",
+    "nameRequired": "请输入姓名",
+    "emailRequired": "请输入邮箱",
+    "emailInvalid": "邮箱格式不正确",
     "usernameInvalidChars": "用户名只能包含字母、数字、下划线",
     "usernameInvalidLength": "用户名长度必须在3-20个字符之间",
-    "passwordStrength": "密码必须包含大写字母、小写字母、数字、特殊字符，且长度至少8位"
+    "passwordStrength": "密码必须包含大写字母、小写字母、数字、特殊字符，且长度至少8位",
+    "passwordMismatch": "两次输入的密码不一致"
   },
   "navigation": {
     "userManagement": "用户管理",
@@ -97,3 +126,5 @@
     "unknownError": "未知错误"
   }
 }
+
+
