@@ -1,3 +1,5 @@
+import { User } from './user.model';
+
 // API 响应基础接口
 export interface ApiResponse<T = any> {
   success: boolean;
@@ -31,6 +33,3 @@ export interface RefreshTokenResponse {
   refreshToken: string;
   expiresIn: number;
 }
-
-// 从 user.model.ts 导入 User 类型
-import { User } from './user.model';

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { MenuComponent } from './menu/menu.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 
@@ -15,14 +14,9 @@ export const routes: Routes = [
       import('./pages/register/register.routes').then((m) => m.REGISTER_ROUTES),
   },
   {
-    path: 'index',
-    component: MenuComponent,
-    canActivate: [AuthGuard],
-  },
-  {
     path: '',
     pathMatch: 'full',
-    redirectTo: '/index',
+    redirectTo: '/login',
   },
   {
     path: 'welcome',
@@ -34,6 +28,6 @@ export const routes: Routes = [
     path: 'manage',
     loadChildren: () =>
       import('./pages/manage/manage.routes').then((m) => m.MANAGE_ROUTES),
-    canActivate: [AuthGuard, AdminGuard],
+    canActivate: [AuthGuard],
   },
 ];

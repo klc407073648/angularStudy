@@ -16,7 +16,7 @@ import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { AuthHttpService } from '../../services/auth-http.service';
-import { LoginRequest } from '../../model/user.model';
+import { LoginRequest, UserRole } from '../../model/user.model';
 import { passwordValidator, usernameValidator } from '../../common/validator';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ValidationMessageComponent } from '../../components/validation-message/validation-message.component';
@@ -81,7 +81,7 @@ export class LoginComponent {
         if (result.success && result.data) {
           this.message.success(this.translate.instant('login.loginSuccess'));
           // 根据用户角色重定向到不同页面
-          if (result.data.user.role === 'admin') {
+          if (result.data.user.role === UserRole.Admin) {
             this.router.navigate(['/manage']);
           } else {
             this.router.navigate(['/welcome']);

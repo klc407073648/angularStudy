@@ -18,7 +18,7 @@ import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NgFor, NgIf } from '@angular/common';
 import { AuthHttpService } from './services/auth-http.service';
-import { User } from './model/user.model';
+import { User, UserRole } from './model/user.model';
 import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
@@ -68,7 +68,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     // 初始化翻译服务
-    this.translate.setDefaultLang('zh');
     this.translate.use('zh');
 
     // 监听用户状态变化
@@ -150,7 +149,7 @@ export class AppComponent implements OnInit {
   }
 
   getUserRoleText(): string {
-    return this.currentUser?.role === 'admin'
+    return this.currentUser?.role === UserRole.Admin
       ? this.translate.instant('common.admin')
       : this.translate.instant('common.user');
   }

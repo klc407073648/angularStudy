@@ -27,14 +27,6 @@
         </li>
         <li
           nz-menu-item
-          [class.ant-menu-item-selected]="currentModule === 'orders'"
-        >
-          <a routerLink="/welcome">{{
-            'navigation.orderManagement' | translate
-          }}</a>
-        </li>
-        <li
-          nz-menu-item
           [class.ant-menu-item-selected]="currentModule === 'settings'"
         >
           <a routerLink="/settings">{{
@@ -78,10 +70,6 @@
           *ngFor="let item of sidebarMenu"
           routerLinkActive="ant-menu-item-selected"
         >
-          <span title>
-            <i nz-icon [nzType]="item.icon" nzTheme="outline"></i>
-            <span>{{ item.title | translate }}</span>
-          </span>
           <a [routerLink]="item.link">{{ item.title | translate }}</a>
         </li>
       </ul>

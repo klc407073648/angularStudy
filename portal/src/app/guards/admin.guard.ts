@@ -20,14 +20,11 @@ export class AdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean {
-    if (this.authService.isAdmin()) {
+    if (this.authService.isLoggedIn()) {
       console.log('是管理员');
       return true;
     }
 
-    // 如果不是管理员，重定向到欢迎页面
-    console.log('不是管理员，重定向到欢迎页面');
-    this.router.navigate(['/welcome']);
     return false;
   }
 }
