@@ -22,3 +22,20 @@ type RefreshTokenResponse struct {
 	ExpiresIn    int64  `json:"expiresIn"`
 }
 
+type UserListRequest struct {
+	Page     int    `form:"page" binding:"required,min=1"`
+	PageSize int    `form:"pageSize" binding:"required,min=1,max=100"`
+	Username string `form:"username"`
+}
+
+type UserListResponse struct {
+	Users    []User `json:"users"`
+	Total    int64  `json:"total"`
+	Page     int    `json:"page"`
+	PageSize int    `json:"pageSize"`
+}
+
+type UpdateUserRoleRequest struct {
+	UserID uint     `json:"userId" binding:"required"`
+	Role   UserRole `json:"role" binding:"required"`
+}

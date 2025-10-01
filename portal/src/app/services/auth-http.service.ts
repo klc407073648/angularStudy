@@ -15,6 +15,9 @@ import {
   UserInfoResponse,
   RefreshTokenRequest,
   RefreshTokenResponse,
+  UserListRequest,
+  UserListResponse,
+  UpdateUserRoleRequest
 } from '../model/api.model';
 
 @Injectable({
@@ -130,6 +133,30 @@ export class AuthHttpService {
         }),
         catchError(this.handleError)
       );
+  }
+
+  /**
+   * 获取用户列表
+   */
+  getUserList(params: UserListRequest): Observable<ApiResponse<UserListResponse>> {
+    return this.http.get<ApiResponse<UserListResponse>>(
+      `${this.API_BASE_URL}/users/list`,
+      { params: params as any }
+    ).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * 更新用户角色
+   */
+  updateUserRole(request: UpdateUserRoleRequest): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(
+      `${this.API_BASE_URL}/users/role`,
+      request
+    ).pipe(
+      catchError(this.handleError)
+    );
   }
 
   /**

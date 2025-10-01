@@ -124,6 +124,28 @@
     "forbidden": "Access forbidden",
     "notFound": "Page not found",
     "unknownError": "Unknown error"
+  },
+  "userList": {
+    "title": "User List",
+    "id": "ID",
+    "role": "Role",
+    "createdAt": "Created At",
+    "lastLoginAt": "Last Login",
+    "searchPlaceholder": "Search by username",
+    "noData": "No Data"
+  },
+  "roleManagement": {
+    "title": "Role Management",
+    "currentRole": "Current Role",
+    "actions": "Actions",
+    "searchPlaceholder": "Search by username",
+    "systemAdmin": "System Admin",
+    "cannotEdit": "Cannot Edit",
+    "confirmChange": "Are you sure you want to change this user's role?",
+    "updateSuccess": "Role updated successfully",
+    "updateFailed": "Failed to update role",
+    "loadFailed": "Failed to load user list",
+    "tip": "Tip: Cannot modify the admin account or your own account"
   }
 }
 

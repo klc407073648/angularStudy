@@ -33,3 +33,24 @@ export interface RefreshTokenResponse {
   refreshToken: string;
   expiresIn: number;
 }
+
+// 用户列表请求接口
+export interface UserListRequest {
+  page: number;
+  pageSize: number;
+  username?: string;
+}
+
+// 用户列表响应接口
+export interface UserListResponse {
+  users: User[];
+  total: number;
+  page: number;
+  pageSize: number;
+}
+
+// 更新用户角色请求接口
+export interface UpdateUserRoleRequest {
+  userId: number;
+  role: string;
+}

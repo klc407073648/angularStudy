@@ -124,6 +124,28 @@
     "forbidden": "禁止访问",
     "notFound": "页面未找到",
     "unknownError": "未知错误"
+  },
+  "userList": {
+    "title": "用户列表",
+    "id": "ID",
+    "role": "角色",
+    "createdAt": "创建时间",
+    "lastLoginAt": "最后登录时间",
+    "searchPlaceholder": "请输入用户名搜索",
+    "noData": "暂无数据"
+  },
+  "roleManagement": {
+    "title": "角色管理",
+    "currentRole": "当前角色",
+    "actions": "操作",
+    "searchPlaceholder": "请输入用户名搜索",
+    "systemAdmin": "系统管理员",
+    "cannotEdit": "不可修改",
+    "confirmChange": "确定要修改该用户的角色吗？",
+    "updateSuccess": "角色更新成功",
+    "updateFailed": "角色更新失败",
+    "loadFailed": "获取用户列表失败",
+    "tip": "提示：admin 账号和您自己的账号不能修改角色"
   }
 }
 

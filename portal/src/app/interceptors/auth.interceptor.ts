@@ -26,6 +26,9 @@ export class AuthInterceptor implements HttpInterceptor {
     // 为需要认证的请求添加 Authorization 头
     if (this.isAuthRequest(request)) {
       request = this.addTokenHeader(request);
+      console.log('[AuthInterceptor] 已添加 Authorization 头到请求:', request.url);
+    } else {
+      console.log('[AuthInterceptor] 跳过添加 Authorization 头:', request.url);
     }
 
     return next.handle(request).pipe(
@@ -73,11 +76,14 @@ export class AuthInterceptor implements HttpInterceptor {
     const token = this.authService.getToken();
 
     if (token) {
+      console.log('[AuthInterceptor] Token 已获取，长度:', token.length);
       return request.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
         },
       });
+    } else {
+      console.warn('[AuthInterceptor] 未找到 Token，请先登录');
     }
 
     return request;

@@ -161,6 +161,72 @@ func (s *AuthService) Register(req *models.RegisterRequest) (*models.RegisterRes
 	}, nil
 }
 
+// 获取用户列表（带权限控制）
+func (s *AuthService) GetUserList(req *models.UserListRequest, currentUserID uint, isAdmin bool) (*models.UserListResponse, error) {
+	var users []models.User
+	var total int64
+
+	query := s.db.Model(&models.User{})
+
+	// 如果不是管理员，只能查询自己的信息
+	if !isAdmin {
+		query = query.Where("id = ?", currentUserID)
+	} else {
+		// 管理员可以按用户名搜索
+		if req.Username != "" {
+			query = query.Where("username LIKE ?", "%"+req.Username+"%")
+		}
+	}
+
+	// 统计总数
+	if err := query.Count(&total).Error; err != nil {
+		return nil, err
+	}
+
+	// 分页查询
+	offset := (req.Page - 1) * req.PageSize
+	if err := query.Offset(offset).Limit(req.PageSize).Find(&users).Error; err != nil {
+		return nil, err
+	}
+
+	return &models.UserListResponse{
+		Users:    users,
+		Total:    total,
+		Page:     req.Page,
+		PageSize: req.PageSize,
+	}, nil
+}
+
+// 更新用户角色
+func (s *AuthService) UpdateUserRole(userID uint, newRole models.UserRole, operatorID uint) error {
+	var user models.User
+	if err := s.db.First(&user, userID).Error; err != nil {
+		return errors.New("用户不存在")
+	}
+
+	// 不允许修改 admin 账号的角色
+	if user.Username == "admin" {
+		return errors.New("不能修改 admin 账号的角色")
+	}
+
+	// 不允许修改自己的角色
+	if userID == operatorID {
+		return errors.New("不能修改自己的角色")
+	}
+
+	// 验证角色是否有效
+	if newRole != models.RoleAdmin && newRole != models.RoleUser {
+		return errors.New("无效的角色")
+	}
+
+	user.Role = newRole
+	if err := s.db.Save(&user).Error; err != nil {
+		return errors.New("更新角色失败")
+	}
+
+	return nil
+}
+
 // 密码加密
 func HashPassword(password string) (string, error) {
 	bytes, err := bcrypt.GenerateFromPassword([]byte(password), bcrypt.DefaultCost)

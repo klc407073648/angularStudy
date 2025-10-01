@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -41,7 +41,7 @@ import { ValidationMessageComponent } from '../../components/validation-message/
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   loading = false;
   passwordVisible = false;
@@ -58,6 +58,16 @@ export class LoginComponent {
       password: [null, [Validators.required, passwordValidator]],
       remember: [true],
     });
+  }
+
+  ngOnInit(): void {
+    // 检查用户是否已登录，如果已登录则跳转到相应页面
+    if (this.authService.isLoggedIn()) {
+      const currentUser = this.authService.getCurrentUser();
+      if (currentUser) {
+        this.router.navigate(['/welcome']);
+      }
+    }
   }
 
   onSubmit(): void {
@@ -81,11 +91,7 @@ export class LoginComponent {
         if (result.success && result.data) {
           this.message.success(this.translate.instant('login.loginSuccess'));
           // 根据用户角色重定向到不同页面
-          if (result.data.user.role === UserRole.Admin) {
-            this.router.navigate(['/manage']);
-          } else {
-            this.router.navigate(['/welcome']);
-          }
+          this.router.navigate(['/welcome']);
         } else {
           this.message.error(
             result.message || this.translate.instant('login.invalidCredentials')

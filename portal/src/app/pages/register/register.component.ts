@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
@@ -45,7 +45,7 @@ import { ValidationMessageComponent } from '../../components/validation-message/
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   loading = false;
   passwordVisible = false;
@@ -66,6 +66,16 @@ export class RegisterComponent {
         [Validators.required, confirmPasswordValidator('password')],
       ],
     });
+  }
+
+  ngOnInit(): void {
+    // 检查用户是否已登录，如果已登录则跳转到相应页面
+    if (this.authService.isLoggedIn()) {
+      const currentUser = this.authService.getCurrentUser();
+      if (currentUser) {
+        this.router.navigate(['/welcome']);
+      }
+    }
   }
 
   onSubmit(): void {

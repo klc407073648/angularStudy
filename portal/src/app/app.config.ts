@@ -20,8 +20,7 @@ import { FormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import {
   provideHttpClient,
-  withFetch,
-  withInterceptors,
+  withInterceptorsFromDi,
 } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
@@ -72,7 +71,7 @@ export const appConfig: ApplicationConfig = {
       })
     ),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch()),
+    provideHttpClient(withInterceptorsFromDi()),
     // 初始化翻译服务
     {
       provide: APP_INITIALIZER,

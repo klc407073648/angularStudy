@@ -55,6 +55,14 @@ func main() {
 			auth.POST("/refresh", authHandler.RefreshToken)
 			auth.GET("/me", middleware.AuthMiddleware(), authHandler.GetCurrentUser)
 		}
+
+		// 用户管理路由
+		users := api.Group("/users")
+		users.Use(middleware.AuthMiddleware())
+		{
+			users.GET("/list", authHandler.GetUserList)
+			users.PUT("/role", authHandler.UpdateUserRole)
+		}
 	}
 
 	// 启动服务器
@@ -67,13 +75,24 @@ func createDefaultAdmin(db *gorm.DB) {
 	db.Model(&models.User{}).Count(&count)
 
 	if count == 0 {
-		hashedPassword, _ := services.HashPassword("admin123")
+		// 创建管理员用户
+		hashedPasswordAdmin, _ := services.HashPassword("admin123")
 		admin := models.User{
 			Username: "admin",
-			Password: hashedPassword,
+			Password: hashedPasswordAdmin,
 			Role:     models.RoleAdmin,
 		}
 		db.Create(&admin)
 		log.Println("默认管理员用户已创建: admin/admin123")
+
+		// 创建普通用户用于测试
+		hashedPasswordUser, _ := services.HashPassword("user123")
+		user := models.User{
+			Username: "user",
+			Password: hashedPasswordUser,
+			Role:     models.RoleUser,
+		}
+		db.Create(&user)
+		log.Println("默认普通用户已创建: user/user123")
 	}
 }
