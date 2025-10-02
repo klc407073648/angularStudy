@@ -21,5 +21,9 @@ module.exports = defineConfig({
       libraryTarget: 'umd',
       globalObject: 'window'
     }
+  },
+  css: {
+    extract: false,  // 不提取CSS，确保样式在微前端环境下正确加载
+    sourceMap: false
   }
 })

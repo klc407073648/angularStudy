@@ -90,4 +90,24 @@
   flex: 1;
   overflow: hidden;
   background: #fff;
+  /* 确保Vue应用的样式不受Angular容器影响 */
+  border: none;
+  box-shadow: none;
+  position: relative;
+}
+
+/* 重置Vue容器内的样式，让Vue应用保持原生样式 */
+.vue-container * {
+  box-sizing: border-box;
+}
+
+/* 确保Vue应用的根元素正确显示 */
+.vue-container #app {
+  height: 100%;
+  width: 100%;
+}
+
+/* 移除可能影响Vue应用的Angular样式 */
+.vue-container .ng-star-inserted {
+  height: 100%;
 }

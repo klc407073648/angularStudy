@@ -177,8 +177,8 @@ export class QiankunService {
 
     qiankunModule.start({
       sandbox: {
-        strictStyleIsolation: true,
-        experimentalStyleIsolation: true
+        strictStyleIsolation: false,  // 关闭严格样式隔离，允许Vue样式正常显示
+        experimentalStyleIsolation: false  // 关闭实验性样式隔离
       },
       prefetch: 'all',
       singular: false,

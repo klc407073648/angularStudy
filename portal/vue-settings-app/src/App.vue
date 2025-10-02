@@ -126,6 +126,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
   height: 100vh;
+  /* 确保在微前端环境下样式正确应用 */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 .layout-container {
@@ -169,5 +173,51 @@ export default {
 .layout-main {
   background-color: #fff;
   padding: 20px;
+}
+
+/* 确保Element Plus组件在微前端环境下正确显示 */
+.el-container {
+  height: 100vh;
+}
+
+.el-header {
+  padding: 0 !important;
+}
+
+.el-aside {
+  background-color: #f5f5f5 !important;
+}
+
+.el-menu {
+  border-right: none !important;
+}
+
+.el-menu-item {
+  color: #606266 !important;
+}
+
+.el-menu-item:hover {
+  background-color: #ecf5ff !important;
+  color: #409eff !important;
+}
+
+.el-menu-item.is-active {
+  background-color: #ecf5ff !important;
+  color: #409eff !important;
+}
+
+/* 确保图标正确显示 */
+.el-icon {
+  margin-right: 8px;
+}
+
+/* 确保按钮样式正确 */
+.el-button {
+  border-radius: 4px !important;
+}
+
+/* 确保标签样式正确 */
+.el-tag {
+  border-radius: 4px !important;
 }
 </style>

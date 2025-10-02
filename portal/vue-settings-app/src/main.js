@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
+import './micro-frontend.css'  // 导入微前端样式
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 
 let instance = null
