@@ -14,5 +14,12 @@ module.exports = defineConfig({
     host: '0.0.0.0',
     // 禁用主机检查
     allowedHosts: 'all'
+  },
+  configureWebpack: {
+    output: {
+      library: 'vue-settings-app',
+      libraryTarget: 'umd',
+      globalObject: 'window'
+    }
   }
 })

@@ -223,8 +223,20 @@ export class QiankunService {
         await this.unmountVueSettingsApp();
       }
 
-      // 加载微前端应用
-      const microApp = qiankunModule.loadMicroApp({
+      // 检查Vue应用是否可访问
+      try {
+        const response = await fetch('http://localhost:8081', { 
+          method: 'HEAD',
+          mode: 'no-cors'
+        });
+        console.log('[QiankunService] Vue app is accessible');
+      } catch (error) {
+        console.error('[QiankunService] Vue app not accessible:', error);
+        return false;
+      }
+
+      // 加载微前端应用，添加超时控制
+      const loadPromise = qiankunModule.loadMicroApp({
         name: 'vue-settings-app',
         entry: '//localhost:8081',
         container: container,
@@ -236,6 +248,12 @@ export class QiankunService {
         }
       });
 
+      // 设置10秒超时
+      const timeoutPromise = new Promise((_, reject) => {
+        setTimeout(() => reject(new Error('Vue应用加载超时')), 10000);
+      });
+
+      const microApp = await Promise.race([loadPromise, timeoutPromise]);
       this.microApps.set('vue-settings-app', microApp);
       
       console.log('[QiankunService] Vue settings app loaded successfully');

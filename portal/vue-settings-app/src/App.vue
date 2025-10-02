@@ -11,6 +11,9 @@
           >
             返回主应用
           </el-button>
+          <div v-if="!showBackButton" class="standalone-indicator">
+            <el-tag type="info">独立运行模式</el-tag>
+          </div>
         </div>
       </el-header>
       <el-container>
@@ -147,6 +150,11 @@ export default {
 .header-content h2 {
   margin: 0;
   color: #1890ff;
+}
+
+.standalone-indicator {
+  display: flex;
+  align-items: center;
 }
 
 .layout-aside {

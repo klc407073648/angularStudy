@@ -13,9 +13,6 @@ import { RouterModule } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
-import { NzCardModule } from 'ng-zorro-antd/card';
-import { NzSpinModule } from 'ng-zorro-antd/spin';
-import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { TranslateModule } from '@ngx-translate/core';
 import { QiankunService } from '../../services/qiankun.service';
 
@@ -27,9 +24,6 @@ import { QiankunService } from '../../services/qiankun.service';
     RouterModule,
     NzButtonModule,
     NzIconModule,
-    NzCardModule,
-    NzSpinModule,
-    NzAlertModule,
     TranslateModule,
   ],
   templateUrl: './vue-settings.component.html',
@@ -37,10 +31,8 @@ import { QiankunService } from '../../services/qiankun.service';
 })
 export class VueSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('vueContainer', { static: true }) vueContainer!: ElementRef;
-  loadingStatus = '未开始';
-  isLoading = false;
-  errorMessage = '';
-  showDebugInfo = true; // 设置为 false 可以隐藏调试信息
+  isLoading = true;
+  loadError = '';
 
   constructor(
     private qiankunService: QiankunService,
@@ -49,20 +41,18 @@ export class VueSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     console.log('VueSettingsComponent ngOnInit called');
-    this.loadingStatus = '组件已初始化';
-
-    // 测试qiankun服务是否可用
-    console.log('QiankunService available:', !!this.qiankunService);
 
     // 只在浏览器环境中监听消息
     if (isPlatformBrowser(this.platformId)) {
       window.addEventListener('message', this.handleMessage.bind(this));
+      
+      // 预检查Vue应用是否可用
+      this.checkVueAppAvailability();
     }
   }
 
   ngAfterViewInit() {
     console.log('VueSettingsComponent ngAfterViewInit called');
-    this.loadingStatus = '视图已初始化';
 
     // 延迟加载Vue应用，确保容器已渲染
     setTimeout(() => {
@@ -79,43 +69,27 @@ export class VueSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  async testLoadVue() {
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.loadingStatus = '正在测试加载...';
-    try {
-      await this.loadVueApp();
-    } finally {
-      this.isLoading = false;
-    }
-  }
 
-  async directLoadVue() {
-    this.isLoading = true;
-    this.errorMessage = '';
-    this.loadingStatus = '直接加载Vue应用...';
+  async checkVueAppAvailability() {
     try {
-      // 直接通过iframe加载Vue应用
-      const container = document.querySelector('#vue-settings-container');
-      if (container) {
-        container.innerHTML =
-          '<iframe src="http://localhost:8081" width="100%" height="100%" frameborder="0"></iframe>';
-        this.loadingStatus = 'Vue应用已通过iframe加载';
-      }
+      console.log('Checking Vue app availability at http://localhost:8081');
+      const response = await fetch('http://localhost:8081', { 
+        method: 'HEAD',
+        mode: 'no-cors'
+      });
+      console.log('Vue app is available');
+      return true;
     } catch (error) {
-      console.error('直接加载Vue应用失败:', error);
-      this.loadingStatus = '直接加载失败: ' + error;
-      this.errorMessage =
-        error instanceof Error ? error.message : String(error);
-    } finally {
-      this.isLoading = false;
+      console.warn('Vue app not available at http://localhost:8081:', error);
+      return false;
     }
   }
 
-  private async loadVueApp() {
+  async loadVueApp() {
     try {
       console.log('Loading Vue app into container: #vue-settings-container');
-      this.loadingStatus = '正在加载Vue应用...';
+      this.isLoading = true;
+      this.loadError = '';
 
       // 检查容器元素是否存在
       const container = document.querySelector('#vue-settings-container');
@@ -123,8 +97,16 @@ export class VueSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       if (!container) {
         console.error('Container element #vue-settings-container not found');
-        this.loadingStatus = '容器元素未找到';
-        this.errorMessage = '容器元素未找到';
+        this.loadError = '容器元素未找到';
+        this.isLoading = false;
+        return;
+      }
+
+      // 检查Vue应用是否可用
+      const isAvailable = await this.checkVueAppAvailability();
+      if (!isAvailable) {
+        this.loadError = 'Vue应用未启动，请先启动Vue应用：\n1. 打开命令行\n2. 运行: cd vue-settings-app && npm run serve\n3. 等待Vue应用在8081端口启动';
+        this.isLoading = false;
         return;
       }
 
@@ -133,18 +115,16 @@ export class VueSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
       );
       console.log('Vue app loaded successfully:', result);
 
-      if (result) {
-        this.loadingStatus = 'Vue应用加载成功';
-        this.errorMessage = '';
-      } else {
-        this.loadingStatus = 'Vue应用加载失败';
-        this.errorMessage = 'Vue应用加载失败，请检查Vue应用是否在8081端口运行';
+      if (!result) {
+        console.error('Vue应用加载失败，请检查Vue应用是否在8081端口运行');
+        this.loadError = 'Vue应用加载失败，请检查控制台错误信息';
       }
+      
+      this.isLoading = false;
     } catch (error) {
       console.error('加载Vue应用失败:', error);
-      this.loadingStatus = '加载失败: ' + error;
-      this.errorMessage =
-        error instanceof Error ? error.message : String(error);
+      this.loadError = error instanceof Error ? error.message : String(error);
+      this.isLoading = false;
     }
   }
 
@@ -161,6 +141,12 @@ export class VueSettingsComponent implements OnInit, AfterViewInit, OnDestroy {
         // 使用replaceState避免在浏览器历史中创建新条目
         window.history.replaceState(null, '', event.data.path);
       }
+    }
+  }
+
+  openVueAppDirectly() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.open('http://localhost:8081', '_blank');
     }
   }
 

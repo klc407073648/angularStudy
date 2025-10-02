@@ -8,7 +8,15 @@ import * as ElementPlusIconsVue from '@element-plus/icons-vue'
 let instance = null
 
 function render(props = {}) {
-  const { container, data } = props
+  const { container } = props
+  console.log('[vue-settings-app] render called with props:', props)
+  
+  // 如果已有实例，先卸载
+  if (instance) {
+    instance.unmount()
+    instance = null
+  }
+  
   instance = createApp(App)
   
   // 注册Element Plus图标
@@ -20,38 +28,28 @@ function render(props = {}) {
   instance.use(ElementPlus)
   
   // 挂载应用
-  const mountElement = container ? container.querySelector('#app') : '#app'
+  let mountElement
+  if (container) {
+    // 微前端环境，挂载到指定的容器
+    mountElement = container.querySelector('#app') || container
+  } else {
+    // 独立运行环境
+    mountElement = '#app'
+  }
+  
+  console.log('[vue-settings-app] Mounting to:', mountElement)
   instance.mount(mountElement)
   
   // 如果是微前端环境，处理路由初始化
   if (window.__POWERED_BY_QIANKUN__) {
     console.log('[vue-settings-app] Running in qiankun environment')
-    console.log('[vue-settings-app] Props data:', data)
     
     // 等待路由准备就绪
     router.isReady().then(() => {
       console.log('[vue-settings-app] Router is ready')
       
-      // 如果有传递的路径信息，则跳转到对应路由
-      if (data && data.currentPath) {
-        const vuePath = data.currentPath.replace('/vue-settings', '') || '/general'
-        console.log('[vue-settings-app] Initializing with Vue path:', vuePath)
-        
-        // 确保路径以 / 开头
-        const normalizedPath = vuePath.startsWith('/') ? vuePath : '/' + vuePath
-        
-        if (normalizedPath !== router.currentRoute.value.path) {
-          router.push(normalizedPath).catch(err => {
-            console.error('[vue-settings-app] Initial navigation failed:', err)
-            // 如果导航失败，默认跳转到 general
-            router.push('/general').catch(fallbackErr => {
-              console.error('[vue-settings-app] Fallback navigation also failed:', fallbackErr)
-            })
-          })
-        }
-      } else {
-        // 没有路径信息时，默认跳转到 general
-        console.log('[vue-settings-app] No path data, defaulting to /general')
+      // 默认跳转到 general 页面
+      if (router.currentRoute.value.path === '/') {
         router.push('/general').catch(err => {
           console.error('[vue-settings-app] Default navigation failed:', err)
         })
@@ -77,11 +75,9 @@ export async function mount(props) {
 }
 
 export async function unmount() {
+  console.log('[vue-settings-app] unmount called')
   if (instance) {
     instance.unmount()
-    if (instance._container) {
-      instance._container.innerHTML = ''
-    }
     instance = null
   }
 }
