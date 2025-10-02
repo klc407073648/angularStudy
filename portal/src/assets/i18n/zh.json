@@ -87,6 +87,17 @@
     "systemSettings": "系统设置",
     "welcome": "欢迎页面"
   },
+  "vueSettings": {
+    "title": "Vue系统设置",
+    "loadingStatus": "加载状态",
+    "testLoadVue": "测试加载Vue应用",
+    "directLoadVue": "直接加载Vue应用",
+    "loadingVueApp": "正在加载Vue应用...",
+    "vueAppLoaded": "Vue应用加载成功",
+    "vueAppFailed": "Vue应用加载失败",
+    "containerNotFound": "容器元素未找到",
+    "checkVueApp": "请检查Vue应用是否在8081端口运行"
+  },
   "menu": {
     "userList": "用户列表",
     "roleManagement": "角色管理",
@@ -109,7 +120,10 @@
     "viewUserList": "查看用户列表",
     "viewWelcomePage": "查看欢迎页面",
     "roleManagementAdminOnly": "角色管理（仅管理员）",
-    "permissionSettingsAdminOnly": "权限设置（仅管理员）"
+    "permissionSettingsAdminOnly": "权限设置（仅管理员）",
+    "quickActions": "快速操作",
+    "manageUsers": "用户管理",
+    "systemSettings": "系统设置"
   },
   "auth": {
     "loggedIn": "已登录",

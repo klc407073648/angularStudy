@@ -31,6 +31,7 @@ import {
   TranslateService,
 } from '@ngx-translate/core';
 import { HttpClient as NgHttpClient } from '@angular/common/http';
+import { QiankunService } from './services/qiankun.service';
 
 // 注册语言数据
 registerLocaleData(zh);
@@ -52,6 +53,16 @@ export function initializeTranslation(translate: TranslateService) {
     return translate.use('zh').toPromise();
   };
 }
+
+// 初始化qiankun
+export function initializeQiankun(qiankun: QiankunService) {
+  return () => {
+    console.log('APP_INITIALIZER: Initializing qiankun service');
+    // qiankun服务在构造函数中已经初始化，这里只是确保服务被创建
+    return Promise.resolve();
+  };
+}
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -77,6 +88,13 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeTranslation,
       deps: [TranslateService],
+      multi: true,
+    },
+    // 初始化qiankun服务
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeQiankun,
+      deps: [QiankunService],
       multi: true,
     },
     // 注册 HTTP 拦截器

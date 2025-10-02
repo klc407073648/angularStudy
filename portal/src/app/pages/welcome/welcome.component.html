@@ -78,5 +78,36 @@
         </div>
       </nz-card>
     </div>
+
+    <div class="quick-actions">
+      <nz-card
+        [nzTitle]="'welcome.quickActions' | translate"
+        [nzBordered]="false"
+        class="info-card"
+      >
+        <div class="action-buttons">
+          <button 
+            nz-button 
+            nzType="primary" 
+            nzSize="large"
+            routerLink="/manage"
+            class="action-button"
+          >
+            <i nz-icon nzType="team"></i>
+            {{ 'welcome.manageUsers' | translate }}
+          </button>
+          <button 
+            nz-button 
+            nzType="default" 
+            nzSize="large"
+            routerLink="/vue-settings"
+            class="action-button"
+          >
+            <i nz-icon nzType="setting"></i>
+            {{ 'welcome.systemSettings' | translate }}
+          </button>
+        </div>
+      </nz-card>
+    </div>
   </nz-card>
 </div>

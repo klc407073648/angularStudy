@@ -87,6 +87,17 @@
     "systemSettings": "System Settings",
     "welcome": "Welcome"
   },
+  "vueSettings": {
+    "title": "Vue System Settings",
+    "loadingStatus": "Loading Status",
+    "testLoadVue": "Test Load Vue App",
+    "directLoadVue": "Direct Load Vue App",
+    "loadingVueApp": "Loading Vue app...",
+    "vueAppLoaded": "Vue app loaded successfully",
+    "vueAppFailed": "Vue app loading failed",
+    "containerNotFound": "Container element not found",
+    "checkVueApp": "Please check if Vue app is running on port 8081"
+  },
   "menu": {
     "userList": "User List",
     "roleManagement": "Role Management",
@@ -109,7 +120,10 @@
     "viewUserList": "View User List",
     "viewWelcomePage": "View Welcome Page",
     "roleManagementAdminOnly": "Role Management (Admin Only)",
-    "permissionSettingsAdminOnly": "Permission Settings (Admin Only)"
+    "permissionSettingsAdminOnly": "Permission Settings (Admin Only)",
+    "quickActions": "Quick Actions",
+    "manageUsers": "User Management",
+    "systemSettings": "System Settings"
   },
   "auth": {
     "loggedIn": "Logged in",

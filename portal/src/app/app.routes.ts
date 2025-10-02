@@ -30,4 +30,10 @@ export const routes: Routes = [
       import('./pages/manage/manage.routes').then((m) => m.MANAGE_ROUTES),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'vue-settings',
+    loadChildren: () =>
+      import('./pages/vue-settings/vue-settings.routes').then((m) => m.VUE_SETTINGS_ROUTES),
+    canActivate: [AuthGuard],
+  },
 ];

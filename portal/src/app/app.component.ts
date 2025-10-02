@@ -21,6 +21,7 @@ import { AuthHttpService } from './services/auth-http.service';
 import { User, UserRole } from './model/user.model';
 import { LanguageSwitcherComponent } from './components/language-switcher/language-switcher.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { QiankunService } from './services/qiankun.service';
 
 @Component({
   selector: 'app-root',
@@ -63,8 +64,11 @@ export class AppComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthHttpService,
-    private translate: TranslateService
-  ) {}
+    private translate: TranslateService,
+    private qiankunService: QiankunService
+  ) {
+    console.log('AppComponent constructor called, qiankunService injected');
+  }
 
   ngOnInit() {
     // 初始化翻译服务
