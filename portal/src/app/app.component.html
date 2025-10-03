@@ -21,6 +21,12 @@
           nz-menu-item
           [class.ant-menu-item-selected]="currentModule === 'manage'"
         >
+          <a routerLink="/welcome">{{ 'navigation.homePage' | translate }}</a>
+        </li>
+        <li
+          nz-menu-item
+          [class.ant-menu-item-selected]="currentModule === 'manage'"
+        >
           <a routerLink="/manage">{{
             'navigation.userManagement' | translate
           }}</a>
@@ -29,9 +35,15 @@
           nz-menu-item
           [class.ant-menu-item-selected]="currentModule === 'settings'"
         >
-          <a routerLink="/settings">{{
+          <a routerLink="/vue-settings">{{
             'navigation.systemSettings' | translate
           }}</a>
+        </li>
+        <li
+          nz-menu-item
+          [class.ant-menu-item-selected]="currentModule === 'study'"
+        >
+          <a routerLink="/study">{{ 'navigation.study' | translate }}</a>
         </li>
       </ul>
       <!-- 右侧组合：语言切换 + 用户信息 -->

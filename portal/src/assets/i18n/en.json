@@ -82,9 +82,10 @@
     "passwordMismatch": "Passwords do not match"
   },
   "navigation": {
+    "homePage": "Home Page",
     "userManagement": "User Management",
-    "orderManagement": "Order Management",
     "systemSettings": "System Settings",
+    "study": "Knowledge Study",
     "welcome": "Welcome"
   },
   "vueSettings": {
@@ -107,7 +108,8 @@
     "refundManagement": "Refund Management",
     "basicSettings": "Basic Settings",
     "emailConfig": "Email Configuration",
-    "logView": "Log View"
+    "logView": "Log View",
+    "directives": "Directives"
   },
   "welcome": {
     "title": "Welcome to Management System",

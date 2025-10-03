@@ -310,7 +310,7 @@ export class AuthHttpService {
   private getUserPermissions(role: string): string[] {
     const permissions: { [key: string]: string[] } = {
       admin: ['*'], // 管理员拥有所有权限
-      user: ['manage.list.view', 'welcome.view'],
+      user: ['manage.Directives.view', 'welcome.view'],
     };
     return permissions[role] || [];
   }

@@ -13,7 +13,7 @@ import { AuthHttpService } from '../../../services/auth-http.service';
 import { User } from '../../../model/user.model';
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-Directives',
   standalone: true,
   imports: [
     CommonModule,
@@ -50,7 +50,7 @@ export class ListComponent implements OnInit {
 
   loadUserList(): void {
     this.loading = true;
-    console.log('[ListComponent] 开始加载用户列表，参数:', {
+    console.log('[DirectivesComponent] 开始加载用户列表，参数:', {
       page: this.pageIndex,
       pageSize: this.pageSize,
       username: this.searchUsername,
@@ -66,19 +66,19 @@ export class ListComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.loading = false;
-          console.log('[ListComponent] 用户列表响应:', response);
+          console.log('[DirectivesComponent] 用户列表响应:', response);
           if (response.success && response.data) {
             this.userList = response.data.users;
             this.total = response.data.total;
-            console.log('[ListComponent] 成功加载用户列表，总数:', this.total);
+            console.log('[DirectivesComponent] 成功加载用户列表，总数:', this.total);
           } else {
-            console.error('[ListComponent] 获取用户列表失败:', response.message);
+            console.error('[DirectivesComponent] 获取用户列表失败:', response.message);
             this.message.error(response.message || '获取用户列表失败');
           }
         },
         error: (error) => {
           this.loading = false;
-          console.error('[ListComponent] 请求出错:', error);
+          console.error('[DirectivesComponent] 请求出错:', error);
           this.message.error(error.message || '获取用户列表失败');
         },
       });

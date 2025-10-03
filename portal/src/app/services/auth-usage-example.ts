@@ -29,7 +29,7 @@ import { User } from '../model/user.model';
           <p style="color: green;">您拥有管理员权限</p>
         </div>
 
-        <div *ngIf="authService.hasPermission('manage.list.view')">
+        <div *ngIf="authService.hasPermission('manage.Directives.view')">
           <p style="color: blue;">您有查看管理列表的权限</p>
         </div>
 
@@ -127,9 +127,9 @@ export class AuthUsageExampleComponent implements OnInit, OnDestroy {
    */
   checkPermissions(): void {
     const permissions = [
-      'manage.list.view',
-      'manage.list.edit',
-      'manage.list.delete',
+      'manage.Directives.view',
+      'manage.Directives.edit',
+      'manage.Directives.delete',
       'admin.users.manage',
     ];
 

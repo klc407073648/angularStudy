@@ -31,6 +31,12 @@ export const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'study',
+    loadChildren: () =>
+      import('./pages/study/study.routes').then((m) => m.STUDY_ROUTES),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'vue-settings',
     loadChildren: () =>
       import('./pages/vue-settings/vue-settings.routes').then((m) => m.VUE_SETTINGS_ROUTES),

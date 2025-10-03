@@ -1,4 +1,4 @@
-import { UserRole } from "../model/user.model";
+import { UserRole } from '../model/user.model';
 
 // menu.config.ts
 export interface MenuItem {
@@ -31,6 +31,15 @@ export const MENU_CONFIG: { [key: string]: MenuItem[] } = {
       icon: 'safety-certificate',
       permission: 'manage.permissions.view',
       roles: [UserRole.Admin],
+    },
+  ],
+  study: [
+    {
+      title: 'menu.directives',
+      link: '/study/Directives',
+      icon: UserRole.User,
+      permission: 'manage.Directives.view',
+      roles: [UserRole.Admin, UserRole.User],
     },
   ],
   settings: [

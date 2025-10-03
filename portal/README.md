@@ -60,3 +60,9 @@ For more information on using the Angular CLI, including detailed command refere
 
 
 http://localhost:4200/vue-settings/general  可以直接访问，但是按钮跳转有问题
+
+
+D:\code\klc\angularStudy\portal\vue-settings-app>npm run serve
+
+
+ D:\code\klc\angularStudy\portal\backend> go run .\main.go

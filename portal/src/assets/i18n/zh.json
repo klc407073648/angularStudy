@@ -82,9 +82,10 @@
     "passwordMismatch": "两次输入的密码不一致"
   },
   "navigation": {
+    "homePage": "首页",
     "userManagement": "用户管理",
-    "orderManagement": "订单管理",
     "systemSettings": "系统设置",
+    "study": "知识学习",
     "welcome": "欢迎页面"
   },
   "vueSettings": {
@@ -107,7 +108,8 @@
     "refundManagement": "退款管理",
     "basicSettings": "基本设置",
     "emailConfig": "邮件配置",
-    "logView": "日志查看"
+    "logView": "日志查看",
+    "directives": "指令"
   },
   "welcome": {
     "title": "欢迎使用管理系统",
