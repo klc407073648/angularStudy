@@ -42,4 +42,10 @@ export const routes: Routes = [
       import('./pages/vue-settings/vue-settings.routes').then((m) => m.VUE_SETTINGS_ROUTES),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'file-manager',
+    loadChildren: () =>
+      import('./pages/file-manager/file-manager.routes').then((m) => m.fileManagerRoutes),
+    canActivate: [AuthGuard],
+  },
 ];

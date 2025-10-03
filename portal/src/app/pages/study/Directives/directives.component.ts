@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -6,7 +7,6 @@ import { NzSwitchModule } from 'ng-zorro-antd/switch';
 import { FormsModule } from '@angular/forms';
 import { HighlightDirective } from './highlight.directive';
 import { UnlessDirective } from './unless.directive';
-import { TimeDisplayDirective } from './time-display.directive';
 import { TimeDisplayAttrDirective } from './time-display-attr.directive';
 import { IfAdminDirective } from './if-admin.directive';
 
@@ -14,9 +14,9 @@ import { IfAdminDirective } from './if-admin.directive';
   selector: 'app-Directives',
   standalone: true,
   imports: [
+    CommonModule,
     HighlightDirective,
     UnlessDirective,
-    TimeDisplayDirective,
     TimeDisplayAttrDirective,
     IfAdminDirective,
     RouterLink,

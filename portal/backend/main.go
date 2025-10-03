@@ -22,7 +22,7 @@ func main() {
 	}
 
 	// 自动迁移
-	db.AutoMigrate(&models.User{})
+	db.AutoMigrate(&models.User{}, &models.File{})
 
 	// 创建默认管理员用户
 	createDefaultAdmin(db)
@@ -30,6 +30,8 @@ func main() {
 	// 初始化服务
 	authService := services.NewAuthService(db)
 	authHandler := handlers.NewAuthHandler(authService)
+	fileService := services.NewFileService(db)
+	fileHandler := handlers.NewFileHandler(fileService)
 
 	// 初始化Gin
 	r := gin.Default()
@@ -62,6 +64,23 @@ func main() {
 		{
 			users.GET("/list", authHandler.GetUserList)
 			users.PUT("/role", authHandler.UpdateUserRole)
+		}
+
+		// 文件管理路由
+		files := api.Group("/files")
+		files.Use(middleware.AuthMiddleware())
+		{
+			files.POST("/create", fileHandler.CreateFile)
+			files.POST("/chunk", fileHandler.UploadChunk)
+			files.GET("/list", fileHandler.GetFileList)
+			files.POST("/folder", fileHandler.CreateFolder)
+			files.DELETE("/:id", fileHandler.DeleteFile)
+			files.PUT("/rename", fileHandler.RenameFile)
+			files.PUT("/move", fileHandler.MoveFile)
+			files.GET("/progress/:id", fileHandler.GetUploadProgress)
+			files.GET("/download/:id", fileHandler.DownloadFile)
+			files.GET("/info/:id", fileHandler.GetFileInfo)
+			files.POST("/test-sftp", fileHandler.TestSFTPConnection)
 		}
 	}
 

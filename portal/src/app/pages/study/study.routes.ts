@@ -12,7 +12,7 @@ export const STUDY_ROUTES: Routes = [
     canActivate: [AuthGuard, AdminGuard],
   },
   {
-    path: 'directives',
+    path: 'Directives',
     component: DirectivesComponent,
     data: { module: 'study' },
     canActivate: [AuthGuard],

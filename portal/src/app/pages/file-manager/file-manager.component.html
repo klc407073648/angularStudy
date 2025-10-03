@@ -1,0 +1,276 @@
+<div class="file-manager-container">
+  <!-- 工具栏 -->
+  <nz-card class="toolbar-card">
+    <div class="toolbar">
+      <div class="toolbar-left">
+        <button
+          nz-button
+          nzType="text"
+          (click)="goToRoot()"
+          nzTooltip="返回根目录"
+        >
+          <i nz-icon nzType="home"></i>
+        </button>
+
+        <button
+          nz-button
+          nzType="text"
+          (click)="goBack()"
+          [disabled]="breadcrumbs.length === 0"
+          nzTooltip="返回上级"
+        >
+          <i nz-icon nzType="arrow-left"></i>
+        </button>
+
+        <nz-breadcrumb class="breadcrumbs">
+          <nz-breadcrumb-item>
+            <a (click)="goToRoot()">根目录</a>
+          </nz-breadcrumb-item>
+          <nz-breadcrumb-item *ngFor="let crumb of breadcrumbs">
+            {{ crumb.fileName }}
+          </nz-breadcrumb-item>
+        </nz-breadcrumb>
+      </div>
+
+      <div class="toolbar-right">
+        <nz-select
+          [(ngModel)]="selectedStorageType"
+          class="storage-select"
+          nzPlaceHolder="存储类型"
+        >
+          <nz-option nzValue="local" nzLabel="本地存储"></nz-option>
+          <nz-option nzValue="sftp" nzLabel="SFTP存储"></nz-option>
+        </nz-select>
+
+        <button nz-button nzType="primary" (click)="createFolder()">
+          <i nz-icon nzType="folder-add"></i>
+          新建文件夹
+        </button>
+
+        <nz-upload
+          [nzBeforeUpload]="beforeUpload"
+          [nzMultiple]="true"
+          (nzChange)="onFileSelected($event)"
+          nzAction=""
+        >
+          <button nz-button nzType="default" [disabled]="isUploading">
+            <i nz-icon nzType="cloud-upload"></i>
+            上传文件
+          </button>
+        </nz-upload>
+      </div>
+    </div>
+  </nz-card>
+
+  <!-- 搜索栏 -->
+  <nz-card class="search-card">
+    <div class="search-bar">
+      <nz-input-group [nzSuffix]="suffixIcon" class="search-field">
+        <input
+          nz-input
+          [(ngModel)]="searchKeyword"
+          (keyup.enter)="onSearch()"
+          placeholder="输入文件名进行搜索"
+        />
+      </nz-input-group>
+      <ng-template #suffixIcon>
+        <i nz-icon nzType="search" (click)="onSearch()"></i>
+      </ng-template>
+
+      <button
+        nz-button
+        nzType="text"
+        (click)="clearSearch()"
+        *ngIf="searchKeyword"
+      >
+        <i nz-icon nzType="close"></i>
+      </button>
+    </div>
+  </nz-card>
+
+  <!-- 上传进度 -->
+  <nz-card *ngIf="uploadProgress.size > 0" class="progress-card">
+    <div class="upload-progress">
+      <div
+        class="progress-item"
+        *ngFor="let progress of uploadProgress.values()"
+      >
+        <div class="progress-info">
+          <span class="file-name">{{ progress.fileName }}</span>
+          <span class="progress-text"
+            >{{ progress.uploadedSize | number: '1.0-0' }} /
+            {{ progress.totalSize | number: '1.0-0' }} bytes</span
+          >
+        </div>
+        <nz-progress
+          [nzPercent]="progress.progress"
+          [nzStatus]="progress.status === 'uploading' ? 'active' : 'normal'"
+        >
+        </nz-progress>
+      </div>
+    </div>
+  </nz-card>
+
+  <!-- 文件列表 -->
+  <nz-card class="file-list-card">
+    <nz-spin [nzSpinning]="isLoading">
+      <!-- 空状态 -->
+      <div class="empty-state" *ngIf="!isLoading && files.length === 0">
+        <i nz-icon nzType="folder-open" class="empty-icon"></i>
+        <p>暂无文件</p>
+        <nz-upload
+          [nzBeforeUpload]="beforeUpload"
+          [nzMultiple]="true"
+          (nzChange)="onFileSelected($event)"
+          nzAction=""
+        >
+          <button nz-button nzType="primary">
+            <i nz-icon nzType="cloud-upload"></i>
+            上传文件
+          </button>
+        </nz-upload>
+      </div>
+
+      <!-- 文件表格 -->
+      <nz-table
+        *ngIf="!isLoading && files.length > 0"
+        [nzData]="files"
+        [nzPageSize]="pageSize"
+        [nzTotal]="totalFiles"
+        [nzPageIndex]="pageIndex"
+        [nzShowPagination]="true"
+        [nzShowSizeChanger]="true"
+        [nzPageSizeOptions]="[10, 20, 50, 100]"
+        (nzPageIndexChange)="onPageChange($event, pageSize)"
+        (nzPageSizeChange)="onPageChange(1, $event)"
+        [nzFrontPagination]="false"
+        nzBordered
+      >
+        <thead>
+          <tr>
+            <th nzWidth="50px">
+              <label
+                nz-checkbox
+                [nzChecked]="isAllSelected()"
+                [nzIndeterminate]="isIndeterminate()"
+                (nzCheckedChange)="toggleSelectAll($event)"
+              >
+              </label>
+            </th>
+            <th nzColumnKey="name" nzSortOrder="null" [nzSortFn]="true">
+              名称
+            </th>
+            <th nzColumnKey="size" nzSortOrder="null" [nzSortFn]="true">
+              大小
+            </th>
+            <th nzColumnKey="type" nzSortOrder="null" [nzSortFn]="true">
+              类型
+            </th>
+            <th nzColumnKey="status" nzSortOrder="null" [nzSortFn]="true">
+              状态
+            </th>
+            <th nzColumnKey="createdAt" nzSortOrder="null" [nzSortFn]="true">
+              创建时间
+            </th>
+            <th nzWidth="100px">操作</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let file of files">
+            <td>
+              <label
+                nz-checkbox
+                [nzChecked]="isFileSelected(file)"
+                (nzCheckedChange)="onSelectionChange(file, $event)"
+              >
+              </label>
+            </td>
+
+            <td>
+              <div
+                class="file-info"
+                (click)="file.isFolder ? enterFolder(file) : null"
+                [class.folder]="file.isFolder"
+              >
+                <i nz-icon [nzType]="getFileIcon(file)" class="file-icon"></i>
+                <span class="file-name">{{ file.fileName }}</span>
+                <nz-tag *ngIf="file.storageType === 'sftp'" nzColor="blue"
+                  >SFTP</nz-tag
+                >
+              </div>
+            </td>
+
+            <td>
+              <span *ngIf="!file.isFolder">{{
+                formatFileSize(file.fileSize)
+              }}</span>
+              <span *ngIf="file.isFolder">-</span>
+            </td>
+
+            <td>
+              <span *ngIf="file.isFolder" class="folder-type">文件夹</span>
+              <span *ngIf="!file.isFolder">{{ file.mimeType || '未知' }}</span>
+            </td>
+
+            <td>
+              <nz-tag [nzColor]="getStatusColor(file.status)">
+                {{ getStatusText(file.status) }}
+              </nz-tag>
+            </td>
+
+            <td>{{ file.createdAt | date: 'yyyy-MM-dd HH:mm:ss' }}</td>
+
+            <td>
+              <a nz-dropdown [nzDropdownMenu]="menu">
+                {{ 'more'}}
+                <nz-icon nzType="down" />
+              </a>
+              <nz-dropdown-menu #menu="nzDropdownMenu">
+                <ul nz-menu>
+                  <li
+                    nz-menu-item
+                    *ngIf="!file.isFolder"
+                    (click)="renameFile(file)"
+                  >
+                    <i nz-icon nzType="edit"></i>
+                    重命名
+                  </li>
+                  <li
+                    nz-menu-item
+                    *ngIf="!file.isFolder"
+                    (click)="downloadFile(file)"
+                  >
+                    <i nz-icon nzType="download"></i>
+                    下载
+                  </li>
+                  <li
+                    nz-menu-item
+                    (click)="deleteFile(file)"
+                    class="delete-action"
+                  >
+                    <i nz-icon nzType="delete"></i>
+                    删除
+                  </li>
+                </ul>
+              </nz-dropdown-menu>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-spin>
+  </nz-card>
+
+  <!-- 批量操作栏 -->
+  <nz-card *ngIf="selectedFiles.length > 0" class="batch-actions-card">
+    <div class="batch-actions">
+      <span class="selected-count"
+        >已选择 {{ selectedFiles.length }} 个文件</span
+      >
+      <button nz-button nzType="default" nzDanger (click)="deleteSelected()">
+        <i nz-icon nzType="delete"></i>
+        批量删除
+      </button>
+    </div>
+  </nz-card>
+</div>

@@ -109,7 +109,8 @@
     "basicSettings": "Basic Settings",
     "emailConfig": "Email Configuration",
     "logView": "Log View",
-    "directives": "Directives"
+    "directives": "Directives",
+    "fileManager": "File Manager"
   },
   "welcome": {
     "title": "Welcome to Management System",
@@ -162,6 +163,46 @@
     "updateFailed": "Failed to update role",
     "loadFailed": "Failed to load user list",
     "tip": "Tip: Cannot modify the admin account or your own account"
+  },
+  "fileManager": {
+    "title": "File Manager",
+    "uploadFile": "Upload File",
+    "createFolder": "Create Folder",
+    "searchFiles": "Search Files",
+    "fileName": "File Name",
+    "fileSize": "File Size",
+    "fileType": "File Type",
+    "status": "Status",
+    "createdAt": "Created At",
+    "actions": "Actions",
+    "rename": "Rename",
+    "download": "Download",
+    "delete": "Delete",
+    "move": "Move",
+    "copy": "Copy",
+    "uploading": "Uploading",
+    "completed": "Completed",
+    "failed": "Failed",
+    "deleted": "Deleted",
+    "localStorage": "Local Storage",
+    "sftpStorage": "SFTP Storage",
+    "noFiles": "No Files",
+    "uploadSuccess": "File uploaded successfully",
+    "uploadFailed": "File upload failed",
+    "deleteSuccess": "File deleted successfully",
+    "deleteFailed": "File deletion failed",
+    "renameSuccess": "Rename successful",
+    "renameFailed": "Rename failed",
+    "downloadSuccess": "File download successful",
+    "downloadFailed": "File download failed",
+    "createFolderSuccess": "Folder created successfully",
+    "createFolderFailed": "Folder creation failed",
+    "confirmDelete": "Are you sure you want to delete this file?",
+    "confirmBatchDelete": "Are you sure you want to delete the selected files?",
+    "fileTooLarge": "File size exceeds limit",
+    "unsupportedFileType": "Unsupported file type",
+    "enterFolderName": "Please enter folder name",
+    "enterNewName": "Please enter new name"
   }
 }
 

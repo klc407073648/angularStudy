@@ -37,7 +37,7 @@ export const MENU_CONFIG: { [key: string]: MenuItem[] } = {
     {
       title: 'menu.directives',
       link: '/study/Directives',
-      icon: UserRole.User,
+      icon: 'code',
       permission: 'manage.Directives.view',
       roles: [UserRole.Admin, UserRole.User],
     },
